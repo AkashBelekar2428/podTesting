@@ -1,0 +1,6 @@
+framework module MFUIAthentication {
+  umbrella header "MFUIAthentication-umbrella.h"
+
+  export *
+  module * { export * }
+}
