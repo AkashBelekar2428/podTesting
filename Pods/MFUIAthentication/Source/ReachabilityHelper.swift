@@ -26,6 +26,7 @@ import SystemConfiguration
 
 let ReachabilityStatusChangedNotification = "ReachabilityStatusChangedNotification"
 
+//MARK: ReachabilityType Enum
 public enum ReachabilityType: CustomStringConvertible {
     case wwan
     case wiFi
@@ -38,6 +39,7 @@ public enum ReachabilityType: CustomStringConvertible {
     }
 }
 
+//MARK: ReachabilityStatus Enum
 public enum ReachabilityStatus: CustomStringConvertible  {
     case offline
     case online(ReachabilityType)
@@ -52,8 +54,10 @@ public enum ReachabilityStatus: CustomStringConvertible  {
     }
 }
 
+//MARK: Reach Class
 public class Reach {
     
+    //MARK: Network Connection Status
     func connectionStatus() -> ReachabilityStatus {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
@@ -92,9 +96,9 @@ public class Reach {
         
         SCNetworkReachabilityScheduleWithRunLoop(reachability, CFRunLoopGetMain(), RunLoop.Mode.common as CFString)
     }
-    
 }
 
+//MARK: ReachabilityStatus Extension
 extension ReachabilityStatus {
     init(reachabilityFlags flags: SCNetworkReachabilityFlags) {
         let connectionRequired = flags.contains(.connectionRequired)

@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+//MARK: ValidationClass 
 public class ValidationClass {
     
     //MARK: Singletone
@@ -34,7 +36,6 @@ public class ValidationClass {
         }
     }
     
-    
     //MARK: PasswordValidations
     private func isValidPassword(password:String) -> Bool {
         let passwordReg = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*()\\-_=+{}|?>.<,:;~`’]{8,}$"
@@ -43,16 +44,20 @@ public class ValidationClass {
     }
     
     public func isPasswordValid(password:String) -> (String,Bool) {
+        
         let trimPassword = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if trimPassword.isEmpty == false{
+            
             let validPassword = self.isValidPassword(password: password)
+            
             let passCount = password.count
+            
             if (passCount >= Password_Minimun) && (passCount <= Password_Maximum) {
                 return("",true)
             } else {
                 return (msg_invalid_password,false)
             }
-            
         } else {
             return (msg_blank_password,false)
         }
@@ -62,6 +67,7 @@ public class ValidationClass {
     public func isPhoneValid(phone:String) -> (String,Bool){
         
         let trimPhone = phone.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if trimPhone.isEmpty == false {
             if trimPhone.count == 10 {
                 return ("",true)
@@ -79,16 +85,16 @@ public class ValidationClass {
         let trimUser = username.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimUser.isEmpty == false{
             return ("",true)
-        }
-        else
-        {
+        } else {
             return(msg_blank_username,false)
         }
     }
     
-    //MARK: PIN
+    //MARK: PINValidations
     public func isPINValid(pin:String) -> (String,Bool){
+        
         let trimPIN = pin.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if trimPIN.isEmpty == false{
             if trimPIN.count == 6{
                 return ("",true)

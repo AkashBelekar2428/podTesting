@@ -7,8 +7,10 @@
 
 import Foundation
 
-public class TAImage
-{
+//MARK: TAImage Class
+public class TAImage{
+    
+    //MARK: Variables
     public var TAImageLogo: UIImage = UIImage()
     public var TAImageIcon: UIImage = UIImage()
     public var TAImageClipsToBounds: Bool = false

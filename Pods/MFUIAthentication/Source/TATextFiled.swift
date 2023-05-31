@@ -7,8 +7,10 @@
 
 import Foundation
 
-public class TATextFiled
-{
+//MARK: TATextFiled Class
+public class TATextFiled {
+    
+    //MARK: Variables
     public var TATextfiledPlaceHolderText: String = ""
     public var TATextfiledPlaceHolderTextColor: UIColor = UIColor.black
     public var TATextfiledPlaceHolderTextFont: UIFont = .systemFont(ofSize: 14)

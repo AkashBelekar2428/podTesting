@@ -23,22 +23,25 @@ import ObjectMapper
 //  }
 //}
 
-
-
-public class TAAuthenticateRequest : Mappable
-{
+//MARK: TAAuthenticateRequest Class
+public class TAAuthenticateRequest : Mappable {
+    
+    //MARK: Variables
     public var model : TAAuthenticateRequestModelObj!
+    
+    //MARK: init
     public init() {}
+    
     required public init?(map: Map) {}
-    public func mapping(map: Map)
-    {
+    public func mapping(map: Map){
         model   <- map["model"]
     }
-    
 }
 
-public class TAAuthenticateRequestModelObj : Mappable
-{
+//MARK: TAAuthenticateRequestModelObj Class
+public class TAAuthenticateRequestModelObj : Mappable {
+    
+    //MARK: Variables
     public var authSessionId : String = ""
     public var email : String = ""
     public var userName : String = ""
@@ -48,11 +51,11 @@ public class TAAuthenticateRequestModelObj : Mappable
     public var authFactorType : Int = -1
     public var currentAuthStep : Int = -1
     
-   
+    //MARK: init
     public init() {}
     required public init?(map: Map) {}
-    public func mapping(map: Map)
-    {
+    
+    public func mapping(map: Map){
         authSessionId            <- map["authSessionId"]
         email                    <- map["email"]
         userName                 <- map["userName"]
@@ -61,8 +64,5 @@ public class TAAuthenticateRequestModelObj : Mappable
         pin                      <- map["pin"]
         authFactorType           <- map["authFactorType"]
         currentAuthStep          <- map["currentAuthStep"]
-        
-        
     }
-    
 }

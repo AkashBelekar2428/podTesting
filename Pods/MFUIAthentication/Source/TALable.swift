@@ -7,12 +7,14 @@
 
 import Foundation
 
-public class TALable
-{
+
+//MARK: TALable Class
+public class TALable{
+    
+    //MARK: Variables
     public var TAText: String = ""
     public var TATextColor:UIColor = UIColor.textLblColor
     public var TATextFont: UIFont = UIFont.systemFont(ofSize: 0)
-    public var TATextFontSize:Int = Int(UIFont.systemFontSize)
     public var TATextNumberOfLines: Int = 0
     public var TATextAlignment: NSTextAlignment = .left
     public var TATextCornerRadius: Int = 0

@@ -26,6 +26,7 @@ import ObjectMapper
 //    MOBILE_PIN = 3,
 //    EMAIL_PIN = 4
 
+//MARK: TAAuthFactorType Enum
 public enum TAAuthFactorType {
     case USERNAME_PASSWORD
     case EMAIL_PASSWORD
@@ -35,6 +36,7 @@ public enum TAAuthFactorType {
     case NONE
 }
 
+//MARK: TAAuthFactorNextStep Enum
 public enum TAAuthFactorNextStep {
     case VERIFY_USERNAME_PASSWORD
     case VERIFY_EMAIL_PASSWORD
@@ -46,11 +48,10 @@ public enum TAAuthFactorNextStep {
     case NONE
 }
 
-
-
 // MARK: Generic Response Model
-public class TAAuthGenericResponse : Mappable
-{
+public class TAAuthGenericResponse : Mappable {
+    
+    //MARK: Variables
     public var data : TAAuthGenericResponseDataObj!
     public var isError : Bool = false
     public var errorMessage : String = ""
@@ -60,21 +61,20 @@ public class TAAuthGenericResponse : Mappable
     
     public init() {}
     required public init?(map: Map) {}
-    public func mapping(map: Map)
-    {
+    public func mapping(map: Map){
         data                    <- map["data"]
         isError                 <- map["isError"]
         errorMessage            <- map["errorMessage"]
         errorCode               <- map["errorCode"]
         errors                  <- map["errors"]
         validationErrors        <- map["validationErrors"]
-    }
-    
+    }  
 }
 
 // MARK: Data Response Model
-public class TAAuthGenericResponseDataObj : Mappable
-{
+public class TAAuthGenericResponseDataObj : Mappable {
+    
+    //MARK: Variables
     public var sessionId : String = ""
     public var nextStep : Int = -1
     public var token : TAAuthGenericResponseTokenObj!
@@ -88,8 +88,8 @@ public class TAAuthGenericResponseDataObj : Mappable
    
     public init() {}
     required public init?(map: Map) {}
-    public func mapping(map: Map)
-    {
+    
+    public func mapping(map: Map){
         sessionId                       <- map["sessionId"]
         nextStep                        <- map["nextStep"]
         token                           <- map["token"]
@@ -97,36 +97,36 @@ public class TAAuthGenericResponseDataObj : Mappable
         pendingRetryCount               <- map["pendingRetryCount"]
         resendPinAfter                  <- map["resendPinAfter"]
     }
-    
 }
 
 // MARK: Validation Errors Model
-public class TAAuthGenericResponseTokenObj : Mappable
-{
+public class TAAuthGenericResponseTokenObj : Mappable {
+    
+    //MARK: Variables
     public var token : String = ""
     public var tokenExpiry : String = ""
    
     public init() {}
     required public init?(map: Map) {}
-    public func mapping(map: Map)
-    {
+    
+    public func mapping(map: Map){
         token                       <- map["token"]
         tokenExpiry                 <- map["tokenExpiry"]
     }
-    
 }
+
 // MARK: Validation Errors Model
-public class TAAuthGenericResponseValidationErrorsObj : Mappable
-{
+public class TAAuthGenericResponseValidationErrorsObj : Mappable {
+    
+    //MARK: Variables
     public var propertyName : String = ""
     public var errorMessage : String = ""
    
     public init() {}
     required public init?(map: Map) {}
-    public func mapping(map: Map)
-    {
+    
+    public func mapping(map: Map){
         propertyName                 <- map["propertyName"]
         errorMessage                 <- map["errorMessage"]
-    }
-    
+    } 
 }

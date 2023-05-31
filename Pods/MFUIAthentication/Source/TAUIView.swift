@@ -6,8 +6,12 @@
 //
 
 import Foundation
-public class TAUIView
-{
+
+
+//MARK: TAUIView Class
+public class TAUIView{
+    
+    //MARK: Variables
     public var TAviewBackgroundColor : UIColor = UIColor.gray
     public var TAViewCornerRadius : Int = 0
     public var TAviewCornerWidth : Int = 0
@@ -16,7 +20,5 @@ public class TAUIView
     public var TAviewShadowOffset : CGSize = CGSize()
     public var TAviewShadowRadius : Int = 0
     public var TAViewHeight : Int = 0
-    
     public var TAViewTfBorderColor : UIColor = UIColor.gray
-    
 }

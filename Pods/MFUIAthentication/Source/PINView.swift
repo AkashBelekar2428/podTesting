@@ -7,7 +7,7 @@
 
 import UIKit
 
-////MARK: Protocol PINViewDelegate
+// MARK: Protocol PINViewDelegate
 public protocol PINViewDelegate{
     func validateBtnAction(pinNumber: String)
 }
@@ -17,6 +17,7 @@ protocol GenericPINViewDelegate : AnyObject {
 
 public class PINView: UIView {
     
+    //MARK: IBOutlets
     @IBOutlet weak public var imgHeaderLogo:UIImageView!
     @IBOutlet weak public var lblHeaderLogin:UILabel!
     @IBOutlet weak public var viewHeader:UIView!
@@ -28,7 +29,7 @@ public class PINView: UIView {
     @IBOutlet weak public var viewContainerPIN:UIView!
     @IBOutlet weak public var lblPINsAlpha:UILabel!
     @IBOutlet weak public var viewContainerHeight: NSLayoutConstraint!
-
+    
     @IBOutlet weak public var bgViewVerifyPin: UIView!
     @IBOutlet weak public var pinVarTf: UITextField!
     @IBOutlet weak public var txtSixth: UILabel!
@@ -58,7 +59,6 @@ public class PINView: UIView {
         super.init(frame: frame)
         commonInit()
     }
-    
     
     //MARK: Custom methods
     func commonInit() {
@@ -93,29 +93,25 @@ public class PINView: UIView {
             lbl!.layer.borderWidth = 1.0
         }
         
-        
         btnVerifyTextField.isUserInteractionEnabled = true
         let longPressGest = UILongPressGestureRecognizer.init(target: self, action: #selector(self.LongPressRecogniser(_:)))
         btnVerifyTextField.addGestureRecognizer(longPressGest)
     }
-    @objc func LongPressRecogniser(_ gesture : UILongPressGestureRecognizer)
-    {
-        if gesture.state == .began
-        {
-            if let tagView = self.bgViewVerifyPin.viewWithTag(3211)
-            {
+    
+    @objc func LongPressRecogniser(_ gesture : UILongPressGestureRecognizer){
+        if gesture.state == .began{
+            if let tagView = self.bgViewVerifyPin.viewWithTag(3211){
                 tagView.removeFromSuperview()
             }
             timer.invalidate()
             let location = gesture.location(in: self.bgViewVerifyPin)
+            
             var yOrigin : CGFloat = location.y
             print("Y==> \(yOrigin)")
-            if location.y > 116
-            {
+            
+            if location.y > 116{
                 yOrigin = 71
-            }
-            else
-            {
+            } else {
                 yOrigin = yOrigin - 45
             }
             
@@ -136,8 +132,7 @@ public class PINView: UIView {
             self.bgViewVerifyPin.endEditing(true)
             //bgViewVerifyPin.bringSubviewToFront(btn)
             
-            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut)
-            {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut){
                 btn.transform = .identity
             } completion: { check in
                 self.timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerAction), userInfo: nil, repeats: true)
@@ -145,12 +140,9 @@ public class PINView: UIView {
         }
     }
     // called every time interval from the timer
-    @objc func timerAction()
-    {
-        if let tagView = self.bgViewVerifyPin.viewWithTag(3211)
-        {
-            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut)
-            {
+    @objc func timerAction() {
+        if let tagView = self.bgViewVerifyPin.viewWithTag(3211) {
+            UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut) {
                 tagView.removeFromSuperview()
                 self.timer.invalidate()
             } completion: { check in
@@ -159,36 +151,27 @@ public class PINView: UIView {
         }
     }
     
-    @objc func pasteBtnRecogniser(_ sender : UIButton)
-    {
+    @objc func pasteBtnRecogniser(_ sender : UIButton)  {
         print("Paste pin from clipboard")
         self.bgViewVerifyPin.endEditing(true)
-        if let tagView = bgViewVerifyPin.viewWithTag(3211)
-        {
+        if let tagView = bgViewVerifyPin.viewWithTag(3211) {
             tagView.removeFromSuperview()
             print("View removed")
         }
         
-        if let str = UIPasteboard.general.string
-        {
+        if let str = UIPasteboard.general.string {
             var tempStr = String()
-            if str.count > 0
-            {
+            if str.count > 0 {
                 tempStr = ""
-                for (_,value) in str.enumerated()
-                {
-                    if let intValue = Int("\(value)")
-                    {
+                for (_,value) in str.enumerated() {
+                    if let intValue = Int("\(value)") {
                         tempStr += "\(intValue)"
                     }
                 }
-                if tempStr.count > 6
-                {
+                if tempStr.count > 6 {
                     var tempPin = String()
-                    for (index,value) in tempStr.enumerated()
-                    {
-                        if index <= 5
-                        {
+                    for (index,value) in tempStr.enumerated() {
+                        if index <= 5 {
                             tempPin += "\(value)"
                         }
                     }
@@ -200,10 +183,8 @@ public class PINView: UIView {
                     txtFifth.text = ""
                     txtSixth.text = ""
                     
-                    for char in tempPin
-                    {
-                        switch tempI
-                        {
+                    for char in tempPin  {
+                        switch tempI {
                         case 1:
                             txtFirst.text?.append(char)
                             print("Case = \(tempI)")
@@ -225,11 +206,8 @@ public class PINView: UIView {
                     }
                     pinVarTf.text = tempPin
                     self.delegatePinView?.pinViewDelegate(pinValue: tempPin)
-                }
-                else
-                {
-                    if tempStr.count == 6
-                    {
+                } else {
+                    if tempStr.count == 6 {
                         var tempI = 1
                         txtFirst.text = ""
                         txtSecond.text = ""
@@ -237,10 +215,8 @@ public class PINView: UIView {
                         txtFourth.text = ""
                         txtFifth.text = ""
                         txtSixth.text = ""
-                        for char in tempStr
-                        {
-                            switch tempI
-                            {
+                        for char in tempStr  {
+                            switch tempI {
                             case 1:
                                 txtFirst.text?.append(char)
                             case 2:
@@ -260,9 +236,7 @@ public class PINView: UIView {
                         }
                         pinVarTf.text = tempStr
                         self.delegatePinView?.pinViewDelegate(pinValue: tempStr)
-                    }
-                    else
-                    {
+                    } else {
                         // ignore if less than 6 digit pin.
                     }
                 }
@@ -275,67 +249,62 @@ public class PINView: UIView {
         let nib = bundel.loadNibNamed(nibName, owner: self)?.first as? UIView
         return nib
     }
+    
     //MARK: lables
-  public func setThemsForLable(lbl:UILabel, config:TALable){
-      lbl.text = config.TAText
-      lbl.textColor = config.TATextColor
-      lbl.font = config.TATextFont
-      lbl.numberOfLines = config.TATextNumberOfLines
-      lbl.textAlignment = config.TATextAlignment
-  }
-      
-  //MARK: Valide Button
-  public func setThemsForButton(btn:UIButton, config:TAButton){
-      btn.setTitle( config.TABtnTitleText, for: .normal)
-      btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
-      btn.titleLabel?.font = config.TABtnTitleTextFont
-      btn.backgroundColor = config.TABtnBackgrounColor
-      btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
-      btn.layer.masksToBounds = config.TABtnMasksToBounds
-  }
+    public func setThemsForLable(lbl:UILabel, config:TALable){
+        lbl.text = config.TAText
+        lbl.textColor = config.TATextColor
+        lbl.font = config.TATextFont
+        lbl.numberOfLines = config.TATextNumberOfLines
+        lbl.textAlignment = config.TATextAlignment
+    }
+    
+    //MARK: Valide Button
+    public func setThemsForButton(btn:UIButton, config:TAButton){
+        btn.setTitle( config.TABtnTitleText, for: .normal)
+        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
+        btn.titleLabel?.font = config.TABtnTitleTextFont
+        btn.backgroundColor = config.TABtnBackgrounColor
+        btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
+        btn.layer.masksToBounds = config.TABtnMasksToBounds
+    }
+    
     //MARK: ResendPIN Button
-    public func setThemsForResentPINButton(btn:UIButton, config: TAButton)
-    {
+    public func setThemsForResentPINButton(btn:UIButton, config: TAButton) {
         btn.setTitle( config.TABtnTitleText, for: .normal)
         btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
         btn.titleLabel?.font = config.TABtnTitleTextFont
         btn.backgroundColor = config.TABtnBackgrounColor
     }
-  
-  
-  //MARK: TextField
-  public func setThemsForTextField(textfiled: UITextField, config:TATextFiled)
-  {
-      textfiled.placeholder  = config.TATextfiledPlaceHolderText
-      textfiled.textColor   = config.TATextfiledPlaceHolderTextColor
-      textfiled.font = config.TATextfiledPlaceHolderTextFont
-      textfiled.layer.borderColor = config.TATextfiledPlaceHolderTextColor.cgColor
-      textfiled.layer.borderWidth = CGFloat(config.TATextfiledPlaceHolderBorderWidth)
-  }
-  
-  //MARK: HeaderView
-  public func setThemsForHeaderView(view:UIView, config: TAUIView)
-  {
-      view.backgroundColor = config.TAviewBackgroundColor
-  }
+    
+    //MARK: TextField
+    public func setThemsForTextField(textfiled: UITextField, config:TATextFiled) {
+        textfiled.placeholder  = config.TATextfiledPlaceHolderText
+        textfiled.textColor   = config.TATextfiledPlaceHolderTextColor
+        textfiled.font = config.TATextfiledPlaceHolderTextFont
+        textfiled.layer.borderColor = config.TATextfiledPlaceHolderTextColor.cgColor
+        textfiled.layer.borderWidth = CGFloat(config.TATextfiledPlaceHolderBorderWidth)
+    }
+    
+    //MARK: HeaderView
+    public func setThemsForHeaderView(view:UIView, config: TAUIView) {
+        view.backgroundColor = config.TAviewBackgroundColor
+    }
     
     //MARK: ContainerView
-    public func setThemsContainerView(view:UIView, config: TAUIView)
-    {
+    public func setThemsContainerView(view:UIView, config: TAUIView) {
         view.layer.shadowColor = config.TAviewShadowColor.cgColor
         view.layer.shadowOpacity = Float(config.TAviewShadowOpacity)
         view.layer.shadowOffset = config.TAviewShadowOffset
         view.layer.shadowRadius = CGFloat(config.TAViewCornerRadius)
         view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
         self.viewContainerHeight.constant = CGFloat(config.TAViewHeight)
-        
     }
     
-  //MARK: Header Logo
-  public func setThemsForHeaderViewImageORLogo(img: UIImageView, config: TAImage)
-  {
-      img.image = config.TAImageLogo
-  }
+    //MARK: Header Logo
+    public func setThemsForHeaderViewImageORLogo(img: UIImageView, config: TAImage) {
+        img.image = config.TAImageLogo
+    }
     
     //MARK: SetDefaultThems
     public func setPINDefaultThemes(){
@@ -344,8 +313,7 @@ public class PINView: UIView {
     }
     
     //MARK: Configure DefaultThems
-    func themsConfiguration() -> AuthenticationConfiguration
-    {
+    func themsConfiguration() -> AuthenticationConfiguration {
         let config = AuthenticationConfiguration()
         let lblHeader = TALable()
         let lblFirst = TALable()
@@ -402,8 +370,8 @@ public class PINView: UIView {
         
         //MARK: Header Img Logo
         imgLogo.TAImageLogo = UIImage(named: "\("logo2")") ?? UIImage()
-    
         
+        //MARK: Assign Values
         config.headerLbl = lblHeader
         config.firstLbl = lblFirst
         config.secondLbl = lblSecond
@@ -417,10 +385,9 @@ public class PINView: UIView {
     }
     
     //MARK: Set Configurations
-    public func setThemeWithPINConfiguration(config:AuthenticationConfiguration)
-    {
+    public func setThemeWithPINConfiguration(config:AuthenticationConfiguration) {
         self.setThemsForHeaderView(view: viewHeader, config: config.headerView)
-       
+        
         self.setThemsForLable(lbl: lblHeaderLogin, config: config.headerLbl)
         
         self.setThemsForLable(lbl: lblPin, config: config.secondLbl)
@@ -440,8 +407,7 @@ public class PINView: UIView {
     }
     
     //MARK: IBAction
-    @IBAction func sendPinAction(_ sender:UIButton)
-    {
+    @IBAction func sendPinAction(_ sender:UIButton) {
         let pinValide = self.pinVarTf.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         let trimPIN = ValidationClass.shared.isPINValid(pin: pinValide!)
@@ -450,12 +416,11 @@ public class PINView: UIView {
             delegate?.validateBtnAction(pinNumber: pinVarTf.text!)
         }else{
             var topController = TopControllerManager.getTopViewController()
-            AlertManager.shared.showAlter(title: App_Alert_Title, msg: trimPIN.0, action: ok, viewController: topController!)
+            AlertManager.shared.showAlert(title: App_Alert_Title, msg: trimPIN.0, action: ok, viewController: topController!)
         }
     }
     
-    @IBAction func actionTapToEnterPin()
-    {
+    @IBAction func actionTapToEnterPin() {
         self.pinVarTf.becomeFirstResponder()
     }
     
@@ -463,22 +428,18 @@ public class PINView: UIView {
     }
 }
 
-//MARK: UITextFieldDelegate
-extension PINView: UITextViewDelegate, UITextFieldDelegate
-{
+//MARK: UITextFieldDelegate Extension
+extension PINView: UITextViewDelegate, UITextFieldDelegate {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == pinVarTf
-        {
+        if textField == pinVarTf {
             guard CharacterSet(charactersIn: "0123456789").isSuperset(of: CharacterSet(charactersIn: string)) else {
                 return false
             }
             
-            if string.count > 1
-            {
+            if string.count > 1 {
                 var tempStr = ""
                 var tempI = 1
-                for char in string
-                {
+                for char in string {
                     tempStr.append(char)
                     switch tempI {
                     case 1:
@@ -500,73 +461,56 @@ extension PINView: UITextViewDelegate, UITextFieldDelegate
                 }
                 pinVarTf.text = tempStr
                 return false
-            }
-            else
-            {
+            } else {
                 let  char = string.cString(using: String.Encoding.utf8)!
                 let isBackSpace = strcmp(char, "\\b")
                 
                 let currentString: NSString = textField.text! as NSString
-                if (currentString as String).count == 6 && isBackSpace != -92
-                {
+                if (currentString as String).count == 6 && isBackSpace != -92 {
                     return false
                 }
                 
-                if (string == " ")
-                {
+                if (string == " ") {
                     return false
                 }
                 
-                if (pinVarTf.text?.count == 0 )
-                {
+                if (pinVarTf.text?.count == 0) {
                     txtFirst.text = string
-                }
-                else if (pinVarTf.text?.count == 1 && isBackSpace == -92)
-                {
+                }  else if (pinVarTf.text?.count == 1 && isBackSpace == -92){
                     txtFirst.text = ""
                 }
-                if (pinVarTf.text?.count == 1 )
-                {
+                if (pinVarTf.text?.count == 1 ) {
                     txtSecond.text = string
                 }
-                else if (pinVarTf.text?.count == 2 && isBackSpace == -92)
-                {
+                else if (pinVarTf.text?.count == 2 && isBackSpace == -92)  {
                     txtSecond.text = ""
                 }
                 
-                if (pinVarTf.text?.count == 2)
-                {
+                if (pinVarTf.text?.count == 2)  {
                     txtthird.text = string
                 }
-                else if (pinVarTf.text?.count == 3 && isBackSpace == -92)
-                {
+                else if (pinVarTf.text?.count == 3 && isBackSpace == -92) {
                     txtthird.text = ""
                 }
                 
-                if (pinVarTf.text?.count == 3)
-                {
+                if (pinVarTf.text?.count == 3)  {
                     txtFourth.text = string
                 }
-                else if (pinVarTf.text?.count == 4 && isBackSpace == -92)
-                {
+                else if (pinVarTf.text?.count == 4 && isBackSpace == -92) {
                     txtFourth.text = ""
                 }
                 
-                if (pinVarTf.text?.count == 4)
-                {
+                if (pinVarTf.text?.count == 4)  {
                     txtFifth.text = string
                 }
-                else if (pinVarTf.text?.count == 5 && isBackSpace == -92)
-                {
+                else if (pinVarTf.text?.count == 5 && isBackSpace == -92) {
                     txtFifth.text = ""
                 }
                 
-                if (pinVarTf.text?.count == 5)
-                {
+                if (pinVarTf.text?.count == 5)  {
                     txtSixth.text = string
                 }
-                else if (pinVarTf.text?.count == 6 && isBackSpace == -92)
-                {
+                else if (pinVarTf.text?.count == 6 && isBackSpace == -92) {
                     txtSixth.text = ""
                 }
                 if pinVarTf.text != "" {
@@ -574,14 +518,13 @@ extension PINView: UITextViewDelegate, UITextFieldDelegate
                 }
                 return true
             }
-        }
-        else{
+        } else{
             return true
         }
     }
 }
 
-//MARK: UITextFieldDelegate
+//MARK: UITextFieldDelegate Extension
 extension UITextField {
     
     func fullTextWith(range: NSRange, replacementString: String) -> String? {

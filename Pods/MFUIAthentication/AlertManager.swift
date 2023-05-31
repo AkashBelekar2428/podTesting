@@ -12,7 +12,8 @@ public class AlertManager {
     //MARK: Singletone
     static public let shared = AlertManager()
     
-    public func showAlter(title:String,msg:String,action:String,viewController:UIViewController) {
+    //MARK: Single Action ShowAlter
+    public func showAlert(title:String,msg:String,action:String,viewController:UIViewController) {
         let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         let action = UIAlertAction(title: action, style: .default,handler:{ _ in
             
@@ -21,26 +22,27 @@ public class AlertManager {
         viewController.present(alert, animated: true)
     }
     
-    public func showAltersActions(title:String, msg:String, firstAction:String, secondAction:String, firstComplition:@escaping () -> Void,secondComplition:@escaping () -> Void, viewController: UIViewController){
+    //MARK: Double Action ShowAlter 
+    public func showAlertsActions(title:String, msg:String, firstAction:String, secondAction:String, firstCompletion:@escaping () -> Void,secondCompletion:@escaping () -> Void, viewController: UIViewController){
         
-        let alter = UIAlertController(title: title, message: msg, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: msg, preferredStyle: .alert)
         
         let ok = UIAlertAction(title: firstAction, style: .default, handler: { _ in
             print("Ok")
             
-            firstComplition()
+            firstCompletion()
         })
         
         let cancle = UIAlertAction(title: secondAction, style: .cancel,handler: { _ in
             print("Cancle")
-            secondComplition()
+            secondCompletion()
         })
         
-        alter.addAction(ok)
-        alter.addAction(cancle)
+        alert.addAction(ok)
+        alert.addAction(cancle)
         
         DispatchQueue.main.async(execute: {
-            viewController.present(alter, animated: true)
+            viewController.present(alert, animated: true)
         })
     }
 }

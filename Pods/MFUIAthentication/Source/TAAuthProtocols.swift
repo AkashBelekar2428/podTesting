@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+//MARK: TAAuthProtocols
 public protocol TAAuthProtocols {
     init(webservice: WsHelperProtocol, authenticateUrl : String, startauthenticateUrl : String, controller : UIViewController)
     func InitialAuthetication(startAuthModel : TAAuthenticateStartRequest)

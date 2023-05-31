@@ -7,11 +7,10 @@
 
 import Foundation
 
-//MARK: AuthenticationConfiguration
- 
-
+//MARK: AuthenticationConfiguration class
 public class AuthenticationConfiguration{
     
+    //MARK: Variables
     public var headerLbl = TALable()
     public var firstLbl = TALable()
     public var secondLbl = TALable()
@@ -23,14 +22,15 @@ public class AuthenticationConfiguration{
     public var logoImage = TAImage()
     public var containerViewShow = TAUIView()
     public var tfView = TAUIView()
+    public var countryCodeBtn = TAButton()
 
     public var viewType: AuthType = .none
     
     public init() {}
 }
 
-//MARK: Enum
-public enum AuthType{
+//MARK: AuthType Enum
+public enum AuthType {
     case pinView, email, mobile, authLog, none
     
 }

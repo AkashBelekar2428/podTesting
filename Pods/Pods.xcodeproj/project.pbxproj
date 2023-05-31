@@ -621,7 +621,6 @@
 		B99A861F7CC2CF071FF01F396C20FA41 /* MFUIAthentication */ = {
 			isa = PBXGroup;
 			children = (
-				6B85FBC7A9543C4237A9CE37155BFACA /* APIServices.swift */,
 				69783577480F70142C0C35C1F1BE99F3 /* AuthenticationConfiguration.swift */,
 				895502AEF62D1E578E7CF45E60EAEE86 /* AuthenticationLogIn.swift */,
 				9714BB3160E83FEF916BCF524752179D /* AuthenticationLogIn.xib */,
@@ -646,6 +645,7 @@
 				3783BD57F538C2975160FC707ADB8150 /* Utility.swift */,
 				7DF97DDBB9381AFE78C81A4CEEC80E1B /* WSHelper.swift */,
 				B6822378B59DDD90781D7EC144A62552 /* WsHelperProtocol.swift */,
+				6B85FBC7A9543C4237A9CE37155BFACA /* APIServices.swift */,
 				AEBB47492A24C9BE00405C89 /* AlertManager.swift */,
 				AE47FC112A25F83A006C4CE8 /* ValidationManager.swift */,
 				AE47FC0F2A25F413006C4CE8 /* ComponentManager.swift */,

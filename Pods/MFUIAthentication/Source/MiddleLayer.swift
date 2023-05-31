@@ -9,17 +9,18 @@
 
 import Foundation
 import UIKit
-//import TAAuthenticationUI
 import ObjectMapper
 import SVProgressHUD
 
+//MARK: TAMultiAuthFactorSuccess Protocol
 public protocol TAMultiAuthFactorSuccess : AnyObject {
     func TAAuthFactorCompletedWithToken(token: TAAuthGenericResponseTokenObj)
 }
 
-
+//MARK: Class MiddleLayer
 public class MiddleLayer : TAAuthProtocols {
     
+    //MARK: Variables
     var webservice : WsHelperProtocol!
     var authenticateUrl : String = ""
     var startauthenticateUrl : String = ""
@@ -28,14 +29,16 @@ public class MiddleLayer : TAAuthProtocols {
     private var startAuthModel : TAAuthenticateStartRequest?
     private var genericAuthRequest : TAAuthenticateRequest?
     
-   public weak var delegate : TAMultiAuthFactorSuccess?
+    public weak var delegate : TAMultiAuthFactorSuccess?
     
+    //MARK: Tag
     private var tagForComponent : Int {
         get {
             return 4444
         }
     }
     
+    //MARK: init
     required public init(webservice: WsHelperProtocol, authenticateUrl : String, startauthenticateUrl : String, controller : UIViewController) {
         self.webservice = webservice
         self.authenticateUrl = authenticateUrl
@@ -44,6 +47,7 @@ public class MiddleLayer : TAAuthProtocols {
         
     }
     
+    //MARK: InitialAuthetication Method
     public func InitialAuthetication(startAuthModel : TAAuthenticateStartRequest) {
         showLoader()
         self.startAuthModel = startAuthModel
@@ -52,6 +56,7 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
+    //MARK: NExtFactorAuthentication Method
     public func StartNextFactorAuthentoicationProcess(RequestModel:TAAuthenticateRequest) {
         showLoader()
         self.genericAuthRequest = RequestModel
@@ -60,72 +65,54 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
+    //MARK: ResponseManager Method
     private func ResponseManager(resp : GeneralRespModel?, isCallAutheticate : Bool) {
         
-        if resp?.status == true
-        {
-            if let genericResp = resp?.respObj as? TAAuthGenericResponse
-            {
-                if genericResp.isError == false
-                {
-                    if genericResp.data != nil
-                    {
+        if resp?.status == true {
+            if let genericResp = resp?.respObj as? TAAuthGenericResponse {
+                if genericResp.isError == false {
+                    if genericResp.data != nil {
                         self.TAAuthRespObj = genericResp
                         self.ConfigureTypesAndSetComponent()
-                    }
-                    else
-                    {
-                        AlertManager.shared.showAlter(title: "Alert", msg: "No data found.", action: "OK", viewController: self.controller ?? UIViewController())
+                    } else{
+                        AlertManager.shared.showAlert(title: "Alert", msg: "No data found.", action: "OK", viewController: self.controller ?? UIViewController())
                         hideLoader()
                     }
-                }
-                else
-                {
+                }else {
                     // show alert with errorMessage
-                    AlertManager.shared.showAlter(title: "Alert", msg: genericResp.errorMessage, action: "OK", viewController: self.controller ?? UIViewController())
+                    AlertManager.shared.showAlert(title: "Alert", msg: genericResp.errorMessage, action: "OK", viewController: self.controller ?? UIViewController())
                     hideLoader()
                 }
             }
-        }
-        else
-        {
-            if resp?.etype == .ServerError
-            {
+        }  else  {
+            if resp?.etype == .ServerError {
                 // show server error message
-                AlertManager.shared.showAlter(title: "Alert", msg: resp?.message ?? somethngWentWrng_Msg, action: "OK", viewController: self.controller ?? UIViewController())
+                AlertManager.shared.showAlert(title: "Alert", msg: resp?.message ?? somethngWentWrng_Msg, action: "OK", viewController: self.controller ?? UIViewController())
             }
             else
-            if resp?.etype == .sessionTimeOut
-            {
-                AlertManager.shared.showAlter(title: "Alert", msg: "Session timeout !!", action: "OK", viewController: self.controller ?? UIViewController())
+            if resp?.etype == .sessionTimeOut {
+                AlertManager.shared.showAlert(title: "Alert", msg: "Session timeout !!", action: "OK", viewController: self.controller ?? UIViewController())
                 // navigate to first page
                 self.InitialAuthetication(startAuthModel: self.startAuthModel!)
-            }
-            else
-            if resp?.etype == .NoInternet
-            {
-                // show no internet popup with retry n cancel
-//                Utility.shared.showAlter(title: "Alert", msg: "No internet connection !!", action: "OK", viewController: self.controller ?? UIViewController())
-                AlertManager.shared.showAltersActions(title: "Alert", msg: "No internet connection !!", firstAction: "Retry", secondAction: "Cancel", firstComplition: {
+            }  else
+            if resp?.etype == .NoInternet {
+                AlertManager.shared.showAlertsActions(title: "Alert", msg: "No internet connection !!", firstAction: "Retry", secondAction: "Cancel", firstCompletion: {
                     if isCallAutheticate == true {
                         self.StartNextFactorAuthentoicationProcess(RequestModel: self.genericAuthRequest!)
                     } else {
                         self.InitialAuthetication(startAuthModel: self.startAuthModel!)
                     }
                     
-                }, secondComplition: {
+                }, secondCompletion: {
                     
                 }, viewController: self.controller!)
             }
             hideLoader()
         }
-        
-
     }
     
-    
-    private func ConfigureTypesAndSetComponent()
-    {
+    //MARK: ConfigureTypesAndSetComponent
+    private func ConfigureTypesAndSetComponent() {
         let dataObj = self.TAAuthRespObj?.data
         
         self.SetAuthFactorType(authFactor: (self.TAAuthRespObj?.data.nextAuthFactor) ?? 0)
@@ -147,9 +134,8 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
-    
-    private func AddComponentFactorWise()
-    {
+    //MARK: AddComponentFactorWise
+    private func AddComponentFactorWise() {
         let type = self.TAAuthRespObj?.data.componentType ?? .NONE
         if let view = self.ConfigureUI(type: type) {
             if let controller = controller {
@@ -159,6 +145,7 @@ public class MiddleLayer : TAAuthProtocols {
         hideLoader()
     }
     
+    //MARK: Enum-Configurations AuthFactorType
     private func SetAuthFactorType(authFactor : Int) {
         let obj = self.TAAuthRespObj?.data
         if authFactor == 1 {
@@ -174,9 +161,8 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
-    
+    //MARK: Enum-Configurations AuthNextStep
     private func SetAuthNextStep(nextStep : Int) {
-       
         let obj = self.TAAuthRespObj?.data
         if nextStep == 1 {
             obj?.nextStepEnum = .VERIFY_USERNAME_PASSWORD
@@ -197,9 +183,8 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
-    
-    private func SetComponentType(authFactor :TAAuthFactorType ,nextStep: TAAuthFactorNextStep)
-    {
+    //MARK: Configurations ComponentType
+    private func SetComponentType(authFactor :TAAuthFactorType ,nextStep: TAAuthFactorNextStep){
         if authFactor == .USERNAME_PASSWORD {
             if nextStep == .VERIFY_USERNAME_PASSWORD || nextStep == .VERIFY_PASSWORD {
                 self.TAAuthRespObj?.data.componentType = .USERNAME_PASSWORD
@@ -237,248 +222,96 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
-   private func ConfigureUI(type : TAAuthFactorType) -> UIView? {
+    //MARK: ConfigureUI
+    private func ConfigureUI(type : TAAuthFactorType) -> UIView? {
         
         if let taggedView = self.controller?.view.viewWithTag(self.tagForComponent) {
             taggedView.removeFromSuperview()
         }
-       
-       var compManager = ComponentManager.init()
-       compManager.delegate = self
-       
-       let nextStep = (self.TAAuthRespObj?.data.nextStep)!
-       let factor = (self.TAAuthRespObj?.data.nextAuthFactor)!
-       var viewfactorwise = compManager.configureComponentFactorwise(nextStep: nextStep, authFactor: factor)
-       viewfactorwise?.tag = self.tagForComponent
-       viewfactorwise?.frame = (self.controller?.view.frame)!
-       
+        
+        let compManager = ComponentManager.init(delegate: self)
+        
+        let nextStep = (self.TAAuthRespObj?.data.nextStep)!
+        let factor = (self.TAAuthRespObj?.data.nextAuthFactor)!
+        let viewfactorwise = compManager.configureComponentFactorwise(nextStep: nextStep, authFactor: factor)
+        viewfactorwise?.tag = self.tagForComponent
+        viewfactorwise?.frame = (self.controller?.view.frame)!
+        
         return viewfactorwise
-       
-       
-       
-       
-//
-//
-//       return UIView()
-//
-//       let frame = self.controller?.view.frame
-//
-//
-//
-//        if type == .USERNAME_PASSWORD || type == .EMAIL_PASSWORD
-//        {
-//            var view : UIView {
-//                get {
-//                    let UsernamePasswordUI = AuthenticationLogIn()
-//                    UsernamePasswordUI.frame = frame!
-//                    UsernamePasswordUI.tag = self.tagForComponent
-//                    UsernamePasswordUI.delegate = self
-//                    UsernamePasswordUI.setDefaultThems()
-//                    UsernamePasswordUI.controller = self.controller
-//                    return UsernamePasswordUI
-//                }
-//            }
-//            return view
-//        }
-//        else
-//        if type == .EMAIL_PIN
-//        {
-//            var view : UIView {
-//                get {
-//                    let emailPasswordUI = Email_Address()
-//                    emailPasswordUI.frame = frame!
-//                    emailPasswordUI.setEmailDefaultThemes()
-//                    emailPasswordUI.tag = self.tagForComponent
-//                    emailPasswordUI.delegate = self
-//                    emailPasswordUI.controller = self.controller
-//                    return emailPasswordUI
-//                }
-//            }
-//            return view
-//        }
-//        else
-//        if type == .SIXDIGITPIN
-//        {
-//            var view : UIView {
-//                get {
-//                    let pinUI = PINView()
-//                    pinUI.frame = frame!
-//                    pinUI.tag = self.tagForComponent
-//                    pinUI.setPINDefaultThemes()
-//                    pinUI.delegate = self
-//                    pinUI.controller = self.controller
-//                    return pinUI
-//                }
-//            }
-//            return view
-//        }
-//        else
-//        if type == .MOBILE_PIN
-//        {
-//            var view : UIView {
-//                get {
-//                    let MobileUI = Mobile_Number()
-//                    MobileUI.frame = frame!
-//                    MobileUI.tag = self.tagForComponent
-//                    MobileUI.setMobileDefaultThemes()
-//                    MobileUI.delegate = self
-//                    MobileUI.controller = self.controller
-//                    return MobileUI
-//                }
-//            }
-//            return view
-//        }
-//        else
-//        {
-//            return UIView()
-//        }
     }
     
-    func showLoader()
-    {
+    func showLoader(){
         SVProgressHUD.show()
         self.controller?.view.isUserInteractionEnabled = false
     }
     
-    func hideLoader()
-    {
+    func hideLoader(){
         SVProgressHUD.dismiss()
         self.controller?.view.isUserInteractionEnabled = true
     }
 }
 
-//extension MiddleLayer : AuthenticationLogInDelegate {
-//    public func sendPinBtnAction(email: String, password: String) {
-//        print("EMAIL ==> \(email)")
-//        print("PASSWORD ==> \(password)")
-//
-//        let dataObj = TAAuthRespObj?.data
-//
-//        let isUserNamePasswordComp = dataObj?.componentType == .USERNAME_PASSWORD
-//
-//        let requestObj = TAAuthenticateRequest.init()
-//        let modelObj = TAAuthenticateRequestModelObj.init()
-//        modelObj.password = password
-//        modelObj.email = isUserNamePasswordComp == true ? "" : email
-//        modelObj.userName = isUserNamePasswordComp == true ? email : ""
-//        modelObj.authFactorType = dataObj!.nextAuthFactor
-//        modelObj.currentAuthStep = dataObj!.nextStep
-//        modelObj.authSessionId = dataObj!.sessionId
-//        requestObj.model = modelObj
-//        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
-//
-//    }
-//}
-//
-//
-//extension MiddleLayer : MobileNumberDelegate {
-//    public func sendPINAction(mobileNumber: String) {
-//        print("PHONE NUMBER ==> \(mobileNumber)")
-//
-//        let dataObj = TAAuthRespObj?.data
-//        let requestObj = TAAuthenticateRequest.init()
-//        let modelObj = TAAuthenticateRequestModelObj.init()
-//        modelObj.phoneNumber = "91\(mobileNumber)"
-//        modelObj.authFactorType = dataObj!.nextAuthFactor
-//        modelObj.currentAuthStep = dataObj!.nextStep
-//        modelObj.authSessionId = dataObj!.sessionId
-//        requestObj.model = modelObj
-//        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
-//
-//    }
-//}
-//
-//
-//extension MiddleLayer : EmailAddressDelegate {
-//    public func sendPINBtnAction(email: String) {
-//
-//        print("EMAIL ID ==> \(email)")
-//        let dataObj = TAAuthRespObj?.data
-//        let requestObj = TAAuthenticateRequest.init()
-//        let modelObj = TAAuthenticateRequestModelObj.init()
-//        modelObj.email = email
-//        modelObj.authFactorType = dataObj!.nextAuthFactor
-//        modelObj.currentAuthStep = dataObj!.nextStep
-//        modelObj.authSessionId = dataObj!.sessionId
-//        requestObj.model = modelObj
-//        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
-//
-//    }
-//}
-//
-//extension MiddleLayer : PINViewDelegate {
-//    public func validateBtnAction(pinNumber: String) {
-//        print("PING VIEW ==> \(pinNumber)")
-//        let dataObj = TAAuthRespObj?.data
-//        let requestObj = TAAuthenticateRequest.init()
-//        let modelObj = TAAuthenticateRequestModelObj.init()
-//        modelObj.pin = pinNumber
-//        modelObj.authFactorType = dataObj!.nextAuthFactor
-//        modelObj.currentAuthStep = dataObj!.nextStep
-//        modelObj.authSessionId = dataObj!.sessionId
-//        requestObj.model = modelObj
-//        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
-//
-//    }
-//}
+//MARK:  MiddleLayer Extension
 extension MiddleLayer : ComponentManagerDelegate {
+    
+    //MARK: Set ComponentManagerDelegate
     public func sendPinBtnAction(email: String, password: String) {
         print("EMAIL ==> \(email)")
-              print("PASSWORD ==> \(password)")
-      
-              let dataObj = TAAuthRespObj?.data
-      
-              let isUserNamePasswordComp = dataObj?.componentType == .USERNAME_PASSWORD
-      
-              let requestObj = TAAuthenticateRequest.init()
-              let modelObj = TAAuthenticateRequestModelObj.init()
-              modelObj.password = password
-              modelObj.email = isUserNamePasswordComp == true ? "" : email
-              modelObj.userName = isUserNamePasswordComp == true ? email : ""
-              modelObj.authFactorType = dataObj!.nextAuthFactor
-              modelObj.currentAuthStep = dataObj!.nextStep
-              modelObj.authSessionId = dataObj!.sessionId
-              requestObj.model = modelObj
-              self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
+        print("PASSWORD ==> \(password)")
+        
+        let dataObj = TAAuthRespObj?.data
+        
+        let isUserNamePasswordComp = dataObj?.componentType == .USERNAME_PASSWORD
+        
+        let requestObj = TAAuthenticateRequest.init()
+        let modelObj = TAAuthenticateRequestModelObj.init()
+        modelObj.password = password
+        modelObj.email = isUserNamePasswordComp == true ? "" : email
+        modelObj.userName = isUserNamePasswordComp == true ? email : ""
+        modelObj.authFactorType = dataObj!.nextAuthFactor
+        modelObj.currentAuthStep = dataObj!.nextStep
+        modelObj.authSessionId = dataObj!.sessionId
+        requestObj.model = modelObj
+        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
     }
     
     public func sendPINBtnAction(email: String) {
         print("EMAIL ID ==> \(email)")
-               let dataObj = TAAuthRespObj?.data
-               let requestObj = TAAuthenticateRequest.init()
-               let modelObj = TAAuthenticateRequestModelObj.init()
-               modelObj.email = email
-               modelObj.authFactorType = dataObj!.nextAuthFactor
-               modelObj.currentAuthStep = dataObj!.nextStep
-               modelObj.authSessionId = dataObj!.sessionId
-               requestObj.model = modelObj
-               self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
+        let dataObj = TAAuthRespObj?.data
+        let requestObj = TAAuthenticateRequest.init()
+        let modelObj = TAAuthenticateRequestModelObj.init()
+        modelObj.email = email
+        modelObj.authFactorType = dataObj!.nextAuthFactor
+        modelObj.currentAuthStep = dataObj!.nextStep
+        modelObj.authSessionId = dataObj!.sessionId
+        requestObj.model = modelObj
+        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
     }
     
     public func sendPINAction(mobileNumber: String) {
         print("PHONE NUMBER ==> \(mobileNumber)")
-      
-              let dataObj = TAAuthRespObj?.data
-              let requestObj = TAAuthenticateRequest.init()
-              let modelObj = TAAuthenticateRequestModelObj.init()
-              modelObj.phoneNumber = "91\(mobileNumber)"
-              modelObj.authFactorType = dataObj!.nextAuthFactor
-              modelObj.currentAuthStep = dataObj!.nextStep
-              modelObj.authSessionId = dataObj!.sessionId
-              requestObj.model = modelObj
-              self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
+        
+        let dataObj = TAAuthRespObj?.data
+        let requestObj = TAAuthenticateRequest.init()
+        let modelObj = TAAuthenticateRequestModelObj.init()
+        modelObj.phoneNumber = "91\(mobileNumber)"
+        modelObj.authFactorType = dataObj!.nextAuthFactor
+        modelObj.currentAuthStep = dataObj!.nextStep
+        modelObj.authSessionId = dataObj!.sessionId
+        requestObj.model = modelObj
+        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
     }
     
     public func validateBtnAction(pinNumber: String) {
         print("PING VIEW ==> \(pinNumber)")
-              let dataObj = TAAuthRespObj?.data
-              let requestObj = TAAuthenticateRequest.init()
-              let modelObj = TAAuthenticateRequestModelObj.init()
-              modelObj.pin = pinNumber
-              modelObj.authFactorType = dataObj!.nextAuthFactor
-              modelObj.currentAuthStep = dataObj!.nextStep
-              modelObj.authSessionId = dataObj!.sessionId
-              requestObj.model = modelObj
-              self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
+        let dataObj = TAAuthRespObj?.data
+        let requestObj = TAAuthenticateRequest.init()
+        let modelObj = TAAuthenticateRequestModelObj.init()
+        modelObj.pin = pinNumber
+        modelObj.authFactorType = dataObj!.nextAuthFactor
+        modelObj.currentAuthStep = dataObj!.nextStep
+        modelObj.authSessionId = dataObj!.sessionId
+        requestObj.model = modelObj
+        self.StartNextFactorAuthentoicationProcess(RequestModel: requestObj)
     }
 }

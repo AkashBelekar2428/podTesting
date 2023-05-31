@@ -11,15 +11,15 @@ import Foundation
 import ObjectMapper
 import Alamofire
 
-public enum responseObject
-{
+//MARK: responseObject Enum
+public enum responseObject{
     case success(Any)
     case failure(errorType,String)
     case sessionTimeOut(Any)
 }
 
-public enum errorType
-{
+//MARK: errorType Enum
+public enum errorType{
     case NoInternet
     case ServerError
     case ValidationError
@@ -27,36 +27,34 @@ public enum errorType
     case none
 }
 
-
+//MARK: Variables
 let somethngWentWrng_Msg = "Something went wrong, please try later."
 let No_Internet_Connection_Msg = "No Internet Connection.\nPlease check internet connection and try again!!"
 
+//MARK: WSHelper Class
 public class WSHelper: NSObject {
     
+    //MARK: WSHelper Instance
     public static let sharedInstance = WSHelper()
     var isLive:Bool! = true
   
     //MARK: Init class
-    private override init()
-    {
+    private override init(){
         let manager = Alamofire.Session.default
         manager.session.configuration.timeoutIntervalForRequest = 120
         super.init()
     }
     
-    private func headers() -> HTTPHeaders
-    {
+    private func headers() -> HTTPHeaders{
         let headers: HTTPHeaders = [
             "Content-Type": "application/json",
             "Accept": "application/json"
         ]
-        
         return headers
     }
     
     //MARK: Network status
-    private func isNetworkReachable() -> Bool
-    {
+    private func isNetworkReachable() -> Bool{
         let status = Reach().connectionStatus()
         switch status {
         case .unknown, .offline:
@@ -72,11 +70,9 @@ public class WSHelper: NSObject {
     
     //MARK: WebServiceCall method
     private func WebServiceCall(api:String,httpType:HTTPMethod, dict:Parameters? ,completion: @escaping (responseObject) -> ()) {
-        if isNetworkReachable()
-        {
+        if isNetworkReachable(){
             var param = dict
-            if param!.count == 0
-            {
+            if param!.count == 0{
                 param = nil
             }
             
@@ -84,8 +80,7 @@ public class WSHelper: NSObject {
             session = .live
             session.session.request(api, method: httpType, parameters: param , encoding: JSONEncoding.default, headers: headers())
                 .response { response in
-                    if response.data != nil
-                    {
+                    if response.data != nil{
                         switch response.response?.statusCode //SessionHandler.sharedInstance.checkSessionTimeOut(resp: response, statusCode: response.response!.statusCode)
                         {
                         case 200:
@@ -100,55 +95,38 @@ public class WSHelper: NSObject {
                            
                             let bodyString = String.init(data: response.data!, encoding: String.Encoding.utf8)!
                             let genericResp = Mapper<TAAuthGenericResponse>().map(JSONString: bodyString)
-                            if genericResp != nil
-                            {
+                            if genericResp != nil{
                                 // get error message from response.data
                                 completion(.failure(.ServerError, genericResp!.errorMessage))
-                            }
-                            else
-                            {
+                            } else {
                                 completion(.failure(.ServerError, response.error != nil ?response.error!.localizedDescription:somethngWentWrng_Msg ))
                             }
                         }
-                    }
-                    else
-                    {
-                        if response.response != nil
-                        {
+                    } else {
+                        if response.response != nil {
 //                            let code = SessionHandler.sharedInstance.chekSessionTimedOutForResp(respCode:response.response!.statusCode)
                             let statusCode = response.response?.statusCode
-                            if statusCode == 401
-                            {
+                            if statusCode == 401 {
                                 completion(.sessionTimeOut(response))
                             }
                             else
-                            if statusCode == 400
-                            {
+                            if statusCode == 400 {
                                 completion(.failure(.ServerError, somethngWentWrng_Msg))
-                            }
-                            else
-                            {
+                            } else {
                                 completion(.failure(.ServerError, response.error != nil ?response.error!.localizedDescription:somethngWentWrng_Msg ))
                             }
-                        }
-                        else
-                        {
+                        } else {
                             completion(.failure(.ServerError, response.error != nil ?response.error!.localizedDescription:somethngWentWrng_Msg ))
                         }
                     }
                 }
-        }
-        else
-        {
+        } else {
             completion(.failure(.NoInternet, No_Internet_Connection_Msg))
         }
     }
     
-    
     //MARK: TAAuthetication remote call's
-
-    public func GetSessionIdForAuthetication(api:String, requestModel:TAAuthenticateStartRequest, completion: @escaping (responseObject) -> ())
-    {
+    public func GetSessionIdForAuthetication(api:String, requestModel:TAAuthenticateStartRequest, completion: @escaping (responseObject) -> ()) {
         let dict = requestModel.toJSON()
         WebServiceCall(api: api, httpType: .post, dict: dict) { (obj) in
             switch obj {
@@ -167,8 +145,7 @@ public class WSHelper: NSObject {
         }
     }
     
-    public func Authenticate(api:String, requestModel:TAAuthenticateRequest, completion: @escaping (responseObject) -> ())
-    {
+    public func Authenticate(api:String, requestModel:TAAuthenticateRequest, completion: @escaping (responseObject) -> ()) {
         let dict = requestModel.toJSON()
         WebServiceCall(api: api, httpType: .post, dict: dict) { (obj) in
             switch obj {
@@ -186,20 +163,17 @@ public class WSHelper: NSObject {
             }
         }
     }
-    
-    
 }
 
-public struct GeneralRespModel
-{
+//MARK: GeneralRespModel Structure
+public struct GeneralRespModel {
     let status: Bool!
     let respObj: Any!
     let message:String!
     let etype:errorType!
 }
 
-
-
+//MARK: RequestManager Class
 public class RequestManager {
     public static let shared = RequestManager()
     fileprivate let liveManager: Session
@@ -209,15 +183,14 @@ public class RequestManager {
         
         let configuration: URLSessionConfiguration = {
             let configuration = URLSessionConfiguration.default
-//            configuration.protocolClasses =
             return configuration
         }()
-//
         self.liveManager = Session.default
         self.mockManager = Session(configuration: configuration)
     }
 }
 
+//MARK: RequestState Enum
 public enum RequestState {
     case live
     case mock

@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 
+//MARK: TopControllerManager Class
 public class TopControllerManager {
     
         class func getTopViewController(base: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {

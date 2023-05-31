@@ -7,30 +7,37 @@
 
 import Foundation
 
-public protocol ComponentManagerDelegate{
+//MARK: ComponentManagerDelegate Protocol
+public protocol ComponentManagerDelegate {
     func sendPinBtnAction(email: String, password: String)
     func sendPINBtnAction(email:String)
     func sendPINAction(mobileNumber:String)
     func validateBtnAction(pinNumber: String)
 }
 
+//MARK:  ComponentManager Class
 public class ComponentManager{
     
-    //MARK: Singletone
-     public init() {}
+    //MARK: init
+    public init(delegate: ComponentManagerDelegate) {
+        self.delegate = delegate
+    }
     
+    //MARK: Variables
     private var enum_authType: TAAuthFactorType = .NONE
     private var enum_nextStep: TAAuthFactorNextStep = .NONE
     private var enum_componentType: TAAuthFactorType = .NONE
     
     public var delegate : ComponentManagerDelegate?
     
+    //MARK: Tag
     public var tagForComponent : Int {
         get {
             return 4444
         }
     }
     
+    //MARK: configureComponentFactorwise
     public func configureComponentFactorwise(nextStep:Int, authFactor:Int) -> UIView? {
         
         SetAuthNextStep(nextStep: nextStep)
@@ -40,6 +47,7 @@ public class ComponentManager{
          return ConfigureUI(type: self.enum_componentType)
     }
     
+    //MARK: Enum-Configuration AuthFactorType
     private func SetAuthFactorType(authFactor : Int) {
         if authFactor == 1 {
             enum_authType = .USERNAME_PASSWORD
@@ -54,7 +62,7 @@ public class ComponentManager{
         }
     }
     
-    
+    //MARK: Enum-Configuration AuthNextStep
     private func SetAuthNextStep(nextStep : Int) {
        
         if nextStep == 1 {
@@ -76,9 +84,8 @@ public class ComponentManager{
         }
     }
     
-    
-    private func SetComponentType(authFactor :TAAuthFactorType ,nextStep: TAAuthFactorNextStep)
-    {
+    //MARK: Enum-Configuration ComponentType
+    private func SetComponentType(authFactor :TAAuthFactorType ,nextStep: TAAuthFactorNextStep){
         if authFactor == .USERNAME_PASSWORD {
             if nextStep == .VERIFY_USERNAME_PASSWORD || nextStep == .VERIFY_PASSWORD {
                 enum_componentType = .USERNAME_PASSWORD
@@ -116,34 +123,29 @@ public class ComponentManager{
         }
     }
     
+    //MARK: ConfigureUI
     private func ConfigureUI(type : TAAuthFactorType) -> UIView? {
 
-        if type == .USERNAME_PASSWORD || type == .EMAIL_PASSWORD
-        {
+        if type == .USERNAME_PASSWORD || type == .EMAIL_PASSWORD {
             var view : UIView {
                 get {
                     let UsernamePasswordUI = AuthenticationLogIn()
-//                    UsernamePasswordUI.frame = frame
                     UsernamePasswordUI.tag = self.tagForComponent
                     UsernamePasswordUI.delegate = self
                     UsernamePasswordUI.setDefaultThems()
-//                    UsernamePasswordUI.controller = self.controller
                     return UsernamePasswordUI
                 }
             }
             return view
         }
         else
-        if type == .EMAIL_PIN
-        {
+        if type == .EMAIL_PIN{
             var view : UIView {
                 get {
                     let emailPasswordUI = Email_Address()
-//                    emailPasswordUI.frame = frame
                     emailPasswordUI.setEmailDefaultThemes()
                     emailPasswordUI.tag = self.tagForComponent
                     emailPasswordUI.delegate = self
-//                    emailPasswordUI.controller = self.controller
                     return emailPasswordUI
                 }
             }
@@ -155,11 +157,9 @@ public class ComponentManager{
             var view : UIView {
                 get {
                     let pinUI = PINView()
-//                    pinUI.frame = frame
                     pinUI.tag = self.tagForComponent
                     pinUI.setPINDefaultThemes()
                     pinUI.delegate = self
-//                    pinUI.controller = self.controller
                     return pinUI
                 }
             }
@@ -171,11 +171,9 @@ public class ComponentManager{
             var view : UIView {
                 get {
                     let MobileUI = Mobile_Number()
-//                    MobileUI.frame = frame
                     MobileUI.tag = self.tagForComponent
                     MobileUI.setMobileDefaultThemes()
                     MobileUI.delegate = self
-//                    MobileUI.controller = self.controller
                     return MobileUI
                 }
             }
@@ -189,24 +187,28 @@ public class ComponentManager{
     
 }
 
+//MARK: Extension AuthenticationLogInDelegate
 extension ComponentManager : AuthenticationLogInDelegate {
     public func sendPinBtnAction(email: String, password: String) {
         delegate?.sendPinBtnAction(email: email, password: password)
     }
 }
 
+//MARK: Extension EmailAddressDelegate
 extension ComponentManager : EmailAddressDelegate{
     public func sendPINBtnAction(email: String) {
         delegate?.sendPINBtnAction(email: email)
     }
 }
 
+//MARK: Extension PINViewDelegate
 extension ComponentManager : PINViewDelegate{
     public func validateBtnAction(pinNumber: String) {
         delegate?.validateBtnAction(pinNumber: pinNumber)
     }
 }
 
+//MARK: Extension MobileNumberDelegate
 extension ComponentManager : MobileNumberDelegate{
     public func sendPINAction(mobileNumber: String) {
         delegate?.sendPINAction(mobileNumber: mobileNumber)
