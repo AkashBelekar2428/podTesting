@@ -88,6 +88,8 @@
 		AE47FC102A25F413006C4CE8 /* ComponentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE47FC0F2A25F413006C4CE8 /* ComponentManager.swift */; };
 		AE47FC122A25F83A006C4CE8 /* ValidationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE47FC112A25F83A006C4CE8 /* ValidationManager.swift */; };
 		AEBB474A2A24C9BE00405C89 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBB47492A24C9BE00405C89 /* AlertManager.swift */; };
+		AEFC98662A27704B00E800D2 /* DataPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEFC98642A27704B00E800D2 /* DataPickerController.swift */; };
+		AEFC98672A27704B00E800D2 /* DataPickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = AEFC98652A27704B00E800D2 /* DataPickerController.xib */; };
 		B17D933C8F8BC6A4F91AA620D7D7A870 /* ParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B0429333B315C72B3724610AD271C7 /* ParameterEncoder.swift */; };
 		B2F867F58A9E5AC7CD01E3E75A3986D3 /* Email_Address.xib in Sources */ = {isa = PBXBuildFile; fileRef = 2DA51AC40AA6CAA8CB183BF0D72C8D04 /* Email_Address.xib */; };
 		B2FDEE5E3DD7A28DFB6D4E9D49B453D0 /* TALable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42D92B8837F308B703FFCC32A18A93FE /* TALable.swift */; };
@@ -337,11 +339,13 @@
 		AE47FC112A25F83A006C4CE8 /* ValidationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationManager.swift; sourceTree = "<group>"; };
 		AE4CCE659691C7BA78CBFC67379454B2 /* Pods-TestingRemote.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-TestingRemote.modulemap"; sourceTree = "<group>"; };
 		AEBB47492A24C9BE00405C89 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		AEFC98642A27704B00E800D2 /* DataPickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPickerController.swift; sourceTree = "<group>"; };
+		AEFC98652A27704B00E800D2 /* DataPickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataPickerController.xib; sourceTree = "<group>"; };
 		AEFEB4889B57D87F3DBEFBED36A06509 /* SVProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-umbrella.h"; sourceTree = "<group>"; };
 		B39C9CD7022DA70F2D3FFB68C5D757D9 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
 		B6822378B59DDD90781D7EC144A62552 /* WsHelperProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WsHelperProtocol.swift; path = Source/WsHelperProtocol.swift; sourceTree = "<group>"; };
 		B833C0C3A21D6CF37529408E37DAA33E /* MultipartUpload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartUpload.swift; path = Source/MultipartUpload.swift; sourceTree = "<group>"; };
-		B9084FE779702931E8DF1D00A2D725FB /* ObjectMapper */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ObjectMapper; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9084FE779702931E8DF1D00A2D725FB /* ObjectMapper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjectMapper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BACAF0993F86FAE9B5A42D3D998C2C6B /* PINView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PINView.swift; path = Source/PINView.swift; sourceTree = "<group>"; };
 		BF6A7640274006C08CC222C85D4EF5C0 /* Notifications.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Notifications.swift; path = Source/Notifications.swift; sourceTree = "<group>"; };
 		C00031513E290BF011E67B224B4944B4 /* RequestTaskMap.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RequestTaskMap.swift; path = Source/RequestTaskMap.swift; sourceTree = "<group>"; };
@@ -568,7 +572,7 @@
 			children = (
 				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire */,
 				CCAE53D5DD222D0858DB7ADC9B073DAE /* MFUIAthentication */,
-				B9084FE779702931E8DF1D00A2D725FB /* ObjectMapper */,
+				B9084FE779702931E8DF1D00A2D725FB /* ObjectMapper.framework */,
 				75BC19D22166D104DC42CA705912F618 /* Pods-TestingRemote */,
 				99B7079C8B9C5A9AA3497A9D1B8ACFD0 /* Pods-TestingRemote-TestingRemoteUITests */,
 				C8E97743864D15A0CF6C80BA7A0DF552 /* Pods-TestingRemoteTests */,
@@ -621,6 +625,8 @@
 		B99A861F7CC2CF071FF01F396C20FA41 /* MFUIAthentication */ = {
 			isa = PBXGroup;
 			children = (
+				AEFC98642A27704B00E800D2 /* DataPickerController.swift */,
+				AEFC98652A27704B00E800D2 /* DataPickerController.xib */,
 				69783577480F70142C0C35C1F1BE99F3 /* AuthenticationConfiguration.swift */,
 				895502AEF62D1E578E7CF45E60EAEE86 /* AuthenticationLogIn.swift */,
 				9714BB3160E83FEF916BCF524752179D /* AuthenticationLogIn.xib */,
@@ -852,7 +858,7 @@
 			);
 			name = ObjectMapper;
 			productName = ObjectMapper;
-			productReference = B9084FE779702931E8DF1D00A2D725FB /* ObjectMapper */;
+			productReference = B9084FE779702931E8DF1D00A2D725FB /* ObjectMapper.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		1C8D67D8B72D6BA42CCEDB648537A340 /* SVProgressHUD */ = {
@@ -1035,6 +1041,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBCFDC39C3650D963C3D519D64A75EA2 /* photo.xcassets in Resources */,
+				AEFC98672A27704B00E800D2 /* DataPickerController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1181,6 +1188,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AE47FC122A25F83A006C4CE8 /* ValidationManager.swift in Sources */,
+				AEFC98662A27704B00E800D2 /* DataPickerController.swift in Sources */,
 				175F3D791630893E5EFDE5EEBBF06720 /* APIServices.swift in Sources */,
 				0D1D023AEC111CDCEC53ABAB8092EC18 /* AuthenticationConfiguration.swift in Sources */,
 				F0B3528A0C595A00041717DA18CD003C /* AuthenticationLogIn.swift in Sources */,
@@ -1797,7 +1805,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ObjectMapper/ObjectMapper-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ObjectMapper/ObjectMapper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1868,7 +1876,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/ObjectMapper/ObjectMapper-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/ObjectMapper/ObjectMapper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

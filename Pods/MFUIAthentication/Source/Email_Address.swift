@@ -215,7 +215,7 @@ public class Email_Address: UIView{
             delegate?.sendPINBtnAction(email: tfEmail.text!)
             
         }else{
-            var topController = TopControllerManager.getTopViewController()
+            let topController = TopControllerManager.getTopViewController()
             alert.showAlert(title: App_Alert_Title, msg:email.0, action: ok, viewController: topController!)
         }
     }

@@ -415,7 +415,7 @@ public class PINView: UIView {
         if trimPIN.1 == true{
             delegate?.validateBtnAction(pinNumber: pinVarTf.text!)
         }else{
-            var topController = TopControllerManager.getTopViewController()
+            let topController = TopControllerManager.getTopViewController()
             AlertManager.shared.showAlert(title: App_Alert_Title, msg: trimPIN.0, action: ok, viewController: topController!)
         }
     }

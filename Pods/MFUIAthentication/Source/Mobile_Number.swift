@@ -256,15 +256,22 @@ public class Mobile_Number:UIView {
     }
     
     @IBAction func pickerViewBtn(_ sender: UIButton){
+       
+        let picker = DataPickerClass()
+        picker.title = "Country Code"
+        picker.value = ""
+        picker.dataArr = countryArray
         
+        let data = DataPickerController()
+        data.dataObj = picker
+        data.delegate = self
+    
+        data.present(data, animated: false)
     }
 }
 
 //MARK: UITextFieldDelegate Extension
 extension Mobile_Number:UITextFieldDelegate{
-    func PassPickerData(pickerValue: String) {
-        print("PickerValue",pickerValue)
-    }
     
     //MARK: Keyboard Open
     public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -288,4 +295,10 @@ extension Mobile_Number:UITextFieldDelegate{
     }
 }
 
-
+extension Mobile_Number: PassDataFromPickerProtocol{
+    public func PassPickerData(pickerValue: String) {
+        
+        print("PickerValue",pickerValue)
+    }
+    
+}
