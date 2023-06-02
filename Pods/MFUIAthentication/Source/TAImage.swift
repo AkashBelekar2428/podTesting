@@ -13,6 +13,7 @@ public class TAImage{
     //MARK: Variables
     public var TAImageLogo: UIImage = UIImage()
     public var TAImageIcon: UIImage = UIImage()
+    public var TAImagContentMode:UIView = UIView()
     public var TAImageClipsToBounds: Bool = false
     public var TAImageUserInteractionEnabled: Bool = false
 }

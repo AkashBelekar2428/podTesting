@@ -16,21 +16,24 @@ public protocol AuthenticationLogInDelegate{
 public class AuthenticationLogIn: UIView{
     
     //MARK: @IBOutlets
-    @IBOutlet weak public var imgHeaderLogo:UIImageView!
-    @IBOutlet weak public var lblHeaderLogin:UILabel!
-    @IBOutlet weak public var viewHeader:UIView!
-    @IBOutlet weak public var lblAuthType:UILabel!
-    @IBOutlet weak public var tfUsername:UITextField!
-    @IBOutlet weak public var tfPassword:UITextField!
-    @IBOutlet weak public var btnValidate:UIButton!
-    @IBOutlet weak public var btnEye:UIButton!
     @IBOutlet weak public var viewContainerAuth:UIView!
-    @IBOutlet weak public var btnForgotPassword:UIButton!
-    @IBOutlet weak public var btnReminder:UIButton!
+    @IBOutlet weak public var imgLogo:UIImageView!
+    @IBOutlet weak public var lblLogin:UILabel!
+    @IBOutlet weak public var lblAuthType:UILabel!
+    @IBOutlet weak public var viewAuthType:UIView!
+    @IBOutlet weak public var lblEmailIcon:UILabel!
+    @IBOutlet weak public var tfEmail:UITextField!
+    @IBOutlet weak public var lblEnterValidAuth:UILabel!
     @IBOutlet weak public var lblPassword:UILabel!
-    @IBOutlet weak public var viewSpaceHeight:UIView!
+    @IBOutlet weak public var viewPassword:UIView!
+    @IBOutlet weak public var lblPasswordIcon:UILabel!
+    @IBOutlet weak public var tfPassword:UITextField!
+    @IBOutlet weak public var btnEyeIcon:UIButton!
+    @IBOutlet weak public var lblEnterValidePassword:UILabel!
+    @IBOutlet weak public var btnForgotPassword:UIButton!
+    @IBOutlet weak public var btnValidate:UIButton!
     @IBOutlet weak public var viewContainerHeight: NSLayoutConstraint!
-    @IBOutlet weak public var viewPasswordTf:UIView!
+   
     
     //MARK: Variables
     let nibName = "AuthenticationLogIn"
@@ -54,7 +57,7 @@ public class AuthenticationLogIn: UIView{
     func commonInit(){
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
-        tfUsername.delegate = self
+        tfEmail.delegate = self
         tfPassword.delegate = self
         self.addSubview(view)
         self.viewContainerAuth.isHidden = true
@@ -66,14 +69,74 @@ public class AuthenticationLogIn: UIView{
         return nib
     }
     
-    //MARK: Lables For Thems
-    public func setThemsForLable(lbl:UILabel, config:TALable){
+    //MARK: Lable Configuration for login
+    public func setThemsForLoginLabel(lbl:UILabel, config:TALable){
         lbl.text = config.TAText
         lbl.textColor = config.TATextColor
         lbl.font = config.TATextFont
         lbl.numberOfLines = config.TATextNumberOfLines
         lbl.textAlignment = config.TATextAlignment
     }
+    
+    //MARK: Lable Configuration for Email
+    public func setThemsForEmailLabel(lbl:UILabel, config:TALable){
+        lbl.text = config.TAText
+        lbl.textColor = config.TATextColor
+        lbl.font = config.TATextFont
+        lbl.textAlignment = config.TATextAlignment
+        lbl.numberOfLines = config.TATextNumberOfLines
+    }
+    
+    //MARK: Lable Configuration for Password
+    public func setThemsForPasswordLabel(lbl:UILabel, config:TALable){
+        lbl.text = config.TAText
+        lbl.textColor = config.TATextColor
+        lbl.font = config.TATextFont
+        lbl.textAlignment = config.TATextAlignment
+        lbl.numberOfLines = config.TATextNumberOfLines
+    }
+    
+    
+    //MARK: Lable Configuration for Enter Valide Email
+    public func setThemsForEnterValidEmailLabel(lbl:UILabel, config:TALable){
+        lbl.text = config.TAText
+        lbl.textColor = config.TATextColor
+        lbl.font = config.TATextFont
+        lbl.textAlignment = config.TATextAlignment
+        lbl.numberOfLines = config.TATextNumberOfLines
+    }
+    
+    //MARK: Lable Configuration for Enter Valide Email
+    public func setThemsForEnterValidPasswordLabel(lbl:UILabel, config:TALable){
+        lbl.text = config.TAText
+        lbl.textColor = config.TATextColor
+        lbl.font = config.TATextFont
+        lbl.textAlignment = config.TATextAlignment
+        lbl.numberOfLines = config.TATextNumberOfLines
+    }
+    
+    //MARK: View Configuration for tfAuth
+    public func setThemsForTfView(view:UIView, config:TAUIView){
+        view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
+        view.layer.borderColor = config.TAviewTfBorderColor.cgColor
+        view.layer.borderWidth = CGFloat(config.TAviewborderWidth)
+    }
+    
+    //MARK: TextField
+    public func setThemsForTextField(textfiled: UITextField, config:TATextFiled){
+        textfiled.placeholder  = config.TATextfiledPlaceHolderText
+        textfiled.textColor   = config.TATextfiledPlaceHolderTextColor
+        textfiled.font = config.TATextfiledPlaceHolderTextFont
+    }
+    
+    //MARK:  Button Configuration for Forgot Password
+    public func setThemsForForgotPasswordButton(btn:UIButton, config: TAButton){
+        btn.setTitle(config.TABtnTitleText, for: .normal)
+        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
+        btn.titleLabel?.font = config.TABtnTitleTextFont
+        btn.backgroundColor = config.TABtnBackgrounColor
+    }
+    
     
     //MARK: Validate Button
     public func setThemsForButton(btn:UIButton, config:TAButton){
@@ -85,37 +148,6 @@ public class AuthenticationLogIn: UIView{
         btn.layer.masksToBounds = config.TABtnMasksToBounds
     }
     
-    //MARK: ResendPIN Button
-    public func setThemsForResentPINButton(btn:UIButton, config: TAButton){
-        btn.setTitle(config.TABtnTitleText, for: .normal)
-        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
-        btn.titleLabel?.font = config.TABtnTitleTextFont
-        btn.backgroundColor = config.TABtnBackgrounColor
-    }
-    
-    //MARK: TextField
-    public func setThemsForTextField(textfiled: UITextField, config:TATextFiled){
-        textfiled.placeholder  = config.TATextfiledPlaceHolderText
-        textfiled.textColor   = config.TATextfiledPlaceHolderTextColor
-        textfiled.font = config.TATextfiledPlaceHolderTextFont
-        textfiled.layer.borderColor = config.TATextfiledPlaceHolderBorderColor.cgColor
-        textfiled.layer.borderWidth = CGFloat(config.TATextfiledPlaceHolderBorderWidth)
-        textfiled.layer.cornerRadius = CGFloat(config.TATextfiledPlaceHolderCornerRadius)
-    }
-    
-    
-    //MARK: HeaderView
-    public func setThemsForHeaderView(view:UIView, config: TAUIView){
-        view.backgroundColor = config.TAviewBackgroundColor
-    }
-    
-    //MARK: tfPasswordView
-    public func setTfViewBorderColors(view:UIView, config:TAUIView){
-        view.layer.borderColor = config.TAViewTfBorderColor.cgColor
-        view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
-        view.layer.borderWidth = CGFloat(config.TAviewCornerWidth)
-    }
-    
     //MARK: ContainerView
     public func setThemsContainerView(view:UIView, config: TAUIView){
         view.layer.shadowColor = config.TAviewShadowColor.cgColor
@@ -123,14 +155,9 @@ public class AuthenticationLogIn: UIView{
         view.layer.shadowOffset = config.TAviewShadowOffset
         view.layer.shadowRadius = CGFloat(config.TAViewCornerRadius)
         view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
-        self.viewContainerHeight.constant = CGFloat(config.TAViewHeight)
+        self.viewContainerHeight.constant = CGFloat(config.TAviewHeight)
     }
-    
-    //MARK: HeaderView Logo
-    public func setThemsForHeaderViewImageORLogo(img: UIImageView, config: TAImage){
-        img.image = config.TAImageLogo
-    }
-    
+
     //MARK: SetDefaultThems
     public func setDefaultThems(){
         let config = self.themsConfiguration()
@@ -140,96 +167,109 @@ public class AuthenticationLogIn: UIView{
     //MARK: Configure DefaultThems
     func themsConfiguration() -> AuthenticationConfiguration{
         let authConfigObj = AuthenticationConfiguration()
-        let lblHeader = TALable()
-        let lblFirst = TALable()
-        let lblSecond = TALable()
+        let lblLogin = TALable()
+        let lblAuthType = TALable()
+        let lblPassword = TALable()
+        let lblEnterValidEmail = TALable()
+        let lblEnterValidPassword = TALable()
+        let viewTestfiled = TAUIView()
         let tfFirst = TATextFiled()
         let tfSecond = TATextFiled()
-        let viewHeader = TAUIView()
-        let btnValide = TAButton()
-        let btnResendPIN = TAButton()
-        let headerImgLogo = TAImage()
+        let btnForgotPassword = TAButton()
+        let btnValid = TAButton()
         let containerView = TAUIView()
-        let tfBoaderView = TAUIView()
+       
         
-        //MARK: HeaderView Txt
-        lblHeader.TAText = "Log in"
-        lblHeader.TATextColor = .textLblColor
-        lblHeader.TATextAlignment = .left
-        lblHeader.TATextFont = .boldSystemFont(ofSize: 20)
+        //MARK: Config Login Label
+        lblLogin.TAText = "Login"
+        lblLogin.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblLogin.TATextFont = .boldSystemFont(ofSize: 28)
+        lblLogin.TATextAlignment = .left
+        lblLogin.TATextNumberOfLines = 0
         
-        //MARK: Email/Username Txt
-        lblFirst.TAText = "Username"
-        lblFirst.TATextColor = .textLblColor
-        lblFirst.TATextAlignment = .left
-        lblFirst.TATextFont = .systemFont(ofSize: 16)
+        //MARK: Config Email Label
+        lblAuthType.TAText = "Email"
+        lblAuthType.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblAuthType.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        lblAuthType.TATextAlignment = .left
+        lblAuthType.TATextNumberOfLines = 0
         
-        //MARK: Password Txt
-        lblSecond.TAText = "Password"
-        lblSecond.TATextColor = .textLblColor
-        lblSecond.TATextAlignment = .left
-        lblSecond.TATextFont = .systemFont(ofSize: 16)
+        //MARK: Config Password Label
+        lblPassword.TAText = "Password"
+        lblPassword.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblPassword.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        lblPassword.TATextAlignment = .left
+        lblPassword.TATextNumberOfLines = 0
         
-        //MARK: Email Textfiled
-        tfFirst.TATextfiledPlaceHolderText = "Enter Username"
-        tfFirst.TATextfiledPlaceHolderTextColor = .black
-        tfFirst.TATextfiledPlaceHolderBorderColor = .textfiledBoarderColor
-        tfFirst.TATextfiledPlaceHolderBorderWidth = 0.5
-        tfFirst.TATextfiledPlaceHolderCornerRadius = 5
-        tfFirst.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 16)
+        //MARK: Config Enter Valid Email Lebel
+        lblEnterValidEmail.TAText = "Please enter valid Eamil"
+        lblEnterValidEmail.TATextColor = #colorLiteral(red: 0.8632873893, green: 0.2070690691, blue: 0.2673147619, alpha: 1)
+        lblEnterValidEmail.TATextFont = .systemFont(ofSize: 13)
+        lblEnterValidEmail.TATextAlignment = .left
+        lblEnterValidEmail.TATextNumberOfLines = 0
+        
+        //MARK: Config Enter Valid Password Lebel
+        lblEnterValidPassword.TAText = "Please enter valid Password"
+        lblEnterValidPassword.TATextColor = #colorLiteral(red: 0.8632873893, green: 0.2070690691, blue: 0.2673147619, alpha: 1)
+        lblEnterValidPassword.TATextFont = .systemFont(ofSize: 13)
+        lblEnterValidPassword.TATextAlignment = .left
+        lblEnterValidPassword.TATextNumberOfLines = 0
+        
+        
+        //MARK: Config tfView
+        viewTestfiled.TAViewCornerRadius = 5
+        viewTestfiled.TAviewborderWidth = 1
+        viewTestfiled.TAviewTfBorderColor = #colorLiteral(red: 0.6392156863, green: 0.6392156863, blue: 0.6392156863, alpha: 1)
+  
+        
+        //MARK: Email Textfiled#colorLiteral(red: 0.8417297006, green: 0.8417295814, blue: 0.841729641, alpha: 1)
+        tfFirst.TATextfiledPlaceHolderText = "abc@yourdomain.com"
+        tfFirst.TATextfiledPlaceHolderTextColor = #colorLiteral(red: 0.6392156863, green: 0.6392156863, blue: 0.6392156863, alpha: 1)
+       
+        tfFirst.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 14, weight: .medium)
         
         //MARK: Password Textfiled
-        tfSecond.TATextfiledPlaceHolderText = "Enter Password"
-        tfSecond.TATextfiledPlaceHolderTextColor = .black
-        tfSecond.TATextfiledPlaceHolderBorderColor = .textfiledBoarderColor
-        tfSecond.TATextfiledPlaceHolderCornerRadius = 5
-        tfSecond.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 16)
+        tfSecond.TATextfiledPlaceHolderText = "********"
+        tfSecond.TATextfiledPlaceHolderTextColor = #colorLiteral(red: 0.6392156863, green: 0.6392156863, blue: 0.6392156863, alpha: 1)
+        tfSecond.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 14, weight: .medium)
         
-        //MARK: HeaderView
-        viewHeader.TAviewBackgroundColor = .headerBackgroundColor
+      
+        //MARK: ForgotPassword Button
+        btnForgotPassword.TABtnTitleText = "Forgot Password?"
+        btnForgotPassword.TABtnTitleTextColor = #colorLiteral(red: 0.1019607843, green: 0.05098039216, blue: 0.6705882353, alpha: 1)
+        btnForgotPassword.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
+        btnForgotPassword.TABtnBackgrounColor = .white
         
-        //MARK: tfBoaderColor
-        tfBoaderView.TAViewTfBorderColor = .textfiledBoarderColor
-        tfBoaderView.TAViewCornerRadius = 5
-        tfBoaderView.TAviewCornerWidth = 1
+        
+        //MARK: Validate Buttun
+        btnValid.TABtnTitleText = "Validate"
+        btnValid.TABtnTitleTextColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        btnValid.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
+        btnValid.TABtnBackgrounColor = #colorLiteral(red: 0.2705882353, green: 0.2745098039, blue: 0.3019607843, alpha: 1)
+        btnValid.TABtnCornerRadius = 5
+        
         
         //MARK: ContainerView
-        containerView.TAViewCornerRadius = 5
-        containerView.TAviewShadowColor = .gray
+        containerView.TAViewCornerRadius = 20
+        containerView.TAviewShadowColor = #colorLiteral(red: 0.8156862745, green: 0.831372549, blue: 0.8666666667, alpha: 1)
         containerView.TAviewShadowOpacity = 0.4
         containerView.TAviewShadowOffset = CGSize(width: 2.0, height: 2.0)
         containerView.TAviewShadowRadius = 6
-        containerView.TAViewHeight = 330
+        containerView.TAviewHeight = 500
         
-        //MARK: valide Btn
-        btnValide.TABtnTitleText = "Validate"
-        btnValide.TABtnTitleTextColor = .btnTitleColor
-        btnValide.TABtnBackgrounColor = .btnBackgroundColor
-        btnValide.TABtnTitleTextFont = .boldSystemFont(ofSize: 16)
-        btnValide.TABtnCornerRadius = 5
-        btnValide.TABtnMasksToBounds = true
-        
-        //MARK: ResendPIN btn
-        btnResendPIN.TABtnTitleText = "Forgot Password?"
-        btnResendPIN.TABtnTitleTextColor = .textLblColor
-        btnResendPIN.TABtnBackgrounColor = .white
-        btnResendPIN.TABtnTitleTextFont = .boldSystemFont(ofSize: 12)
-        
-        //MARK: header Logo
-        headerImgLogo.TAImageLogo = UIImage(named: "\("logo2")") ?? UIImage()
         
         //MARK: Assign Values
-        authConfigObj.headerLbl = lblHeader
-        authConfigObj.firstLbl = lblFirst
-        authConfigObj.secondLbl = lblSecond
+        authConfigObj.loginLbl = lblLogin
+        authConfigObj.authLbl = lblAuthType
+        authConfigObj.passwordLbl = lblPassword
+        authConfigObj.enterValidAuthLbl = lblEnterValidEmail
+        authConfigObj.enterValidPasswordLBl = lblEnterValidPassword
+        authConfigObj.tfView = viewTestfiled
         authConfigObj.firstTextfiled = tfFirst
         authConfigObj.secondTextfiled = tfSecond
-        authConfigObj.headerView = viewHeader
-        authConfigObj.valideBtn = btnValide
-        authConfigObj.resendPINBtn = btnResendPIN
-        authConfigObj.logoImage = headerImgLogo
+        authConfigObj.validBtn = btnValid
+        authConfigObj.forgotPasswordBtn = btnForgotPassword
         authConfigObj.containerViewShow = containerView
-        authConfigObj.tfView = tfBoaderView
         
         return authConfigObj
     }
@@ -237,29 +277,30 @@ public class AuthenticationLogIn: UIView{
     //MARK: Set Configurations
     public func setThemWithAuthConfiguration(config:AuthenticationConfiguration){
         
-        self.setThemsForHeaderView(view: viewHeader, config: config.headerView)
+        self.setThemsForLoginLabel(lbl: lblLogin, config: config.loginLbl)
         
-        self.setThemsForLable(lbl: lblHeaderLogin, config: config.headerLbl)
+        self.setThemsForEmailLabel(lbl: lblAuthType, config: config.authLbl)
         
-        self.setThemsForLable(lbl:lblAuthType, config: config.firstLbl)
+        self.setThemsForPasswordLabel(lbl: lblPassword, config: config.passwordLbl)
         
-        self.setThemsForLable(lbl: lblPassword, config: config.secondLbl)
+        self.setThemsForEnterValidEmailLabel(lbl: lblEnterValidAuth, config: config.enterValidAuthLbl)
         
-        self.setThemsForTextField(textfiled: tfUsername, config: config.firstTextfiled)
+        self.setThemsForEnterValidPasswordLabel(lbl: lblEnterValidePassword, config: config.enterValidPasswordLBl)
+        
+        self.setThemsForTfView(view: viewPassword, config: config.tfView)
+        
+        self.setThemsForTfView(view: viewAuthType, config: config.tfView)
+        
+        self.setThemsForTextField(textfiled: tfEmail, config: config.firstTextfiled)
         
         self.setThemsForTextField(textfiled: tfPassword, config: config.secondTextfiled)
         
-        self.setThemsForHeaderViewImageORLogo(img: imgHeaderLogo, config: config.logoImage)
+        self.setThemsForButton(btn: btnForgotPassword, config: config.forgotPasswordBtn)
         
-        self.setThemsForButton(btn: btnValidate, config: config.valideBtn)
-        
-        self.setThemsForResentPINButton(btn: btnForgotPassword, config: config.resendPINBtn)
-        
-        self.setThemsForHeaderView(view: viewSpaceHeight, config: config.headerView)
+        self.setThemsForButton(btn: btnValidate, config: config.validBtn)
         
         self.setThemsContainerView(view: viewContainerAuth, config: config.containerViewShow)
         
-        self.setTfViewBorderColors(view: viewPasswordTf, config: config.tfView)
         
         self.viewContainerAuth.isHidden = false
     }
@@ -267,12 +308,12 @@ public class AuthenticationLogIn: UIView{
     //MARK: IBAction
     @IBAction func validateBtnAction(_ sender:UIButton){
         
-        let username = ValidationClass.shared.isUsernameValid(username: tfUsername.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
+        let username = ValidationClass.shared.isUsernameValid(username: tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
         let password = ValidationClass.shared.isPasswordValid(password: tfPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "")
         
         if username.1 == true {
             if password.1 == true{
-                delegate?.sendPinBtnAction(email: tfUsername.text!, password: tfPassword.text!)
+                delegate?.sendPinBtnAction(email: tfEmail.text!, password: tfPassword.text!)
             }else{
                 let topController = TopControllerManager.getTopViewController()
                 AlertManager.shared.showAlert(title: App_Alert_Title, msg: password.0, action: ok, viewController: topController!)
@@ -288,10 +329,8 @@ public class AuthenticationLogIn: UIView{
         //        let btneyeImg = tfPassword.isSecureTextEntry ? UIImage(systemName: "eye.slash") : UIImage(systemName: "eye")
         //        btnEye.setImage(btneyeImg, for: .normal)
     }
-    @IBAction func reminderBtnAction(){
-        
-    }
-    @IBAction func resendBtnAction(){
+
+    @IBAction func forgotPasswordBtnAction(){
         
     }
 }

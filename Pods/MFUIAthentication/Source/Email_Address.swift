@@ -16,15 +16,16 @@ public protocol EmailAddressDelegate{
 public class Email_Address: UIView{
     
     //MARK: Outlets
-    @IBOutlet weak public var imgHeaderLogo:UIImageView!
-    @IBOutlet weak public var lblHeaderLogin:UILabel!
-    @IBOutlet weak public var viewHeader:UIView!
-    @IBOutlet weak public var tfEmail:UITextField!
-    @IBOutlet weak public var btnSendPIN:UIButton!
-    @IBOutlet weak public var btnReminder:UIButton!
-    @IBOutlet weak public var lblEmailAddress:UILabel!
     @IBOutlet weak public var viewContainerEmail:UIView!
-    @IBOutlet weak public var viewSpaceHeight:UIView!
+    @IBOutlet weak public var imgLogo:UIImageView!
+    @IBOutlet weak public var lblLogin:UILabel!
+    @IBOutlet weak public var lblEmail:UILabel!
+    @IBOutlet weak public var viewTfEmail:UIView!
+    @IBOutlet weak public var lblEmailIcon:UILabel!
+    @IBOutlet weak public var tfEmail:UITextField!
+    @IBOutlet weak public var lblEnterValideEmail:UILabel!
+    @IBOutlet weak public var btnValid:UIButton!
+   
     @IBOutlet weak public var viewContainerHeight: NSLayoutConstraint!
 
     //MARK: Variables
@@ -61,9 +62,8 @@ public class Email_Address: UIView{
         return nib
     }
     
-    
     //MARK: lables
-    public func setThemsForHeaderLable(lbl:UILabel, config:TALable){
+    public func setThemsForLable(lbl:UILabel, config:TALable){
         lbl.text = config.TAText
         lbl.textColor = config.TATextColor
         lbl.font = config.TATextFont
@@ -71,14 +71,12 @@ public class Email_Address: UIView{
         lbl.textAlignment = config.TATextAlignment
     }
     
-    //MARK: Validate Button
-    public func setThemsForButton(btn:UIButton, config:TAButton){
-        btn.setTitle(config.TABtnTitleText, for: .normal)
-        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
-        btn.titleLabel?.font = config.TABtnTitleTextFont
-        btn.backgroundColor = config.TABtnBackgrounColor
-        btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
-        btn.layer.masksToBounds = config.TABtnMasksToBounds
+    
+    //MARK: tfview
+    public func setThemsForTextFieldView(view:UIView, config:TAUIView){
+        view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
+        view.layer.borderWidth = CGFloat(config.TAviewborderWidth)
+        view.layer.borderColor = config.TAviewTfBorderColor.cgColor
     }
     
     //MARK: TextField
@@ -91,10 +89,25 @@ public class Email_Address: UIView{
         textfiled.layer.cornerRadius = CGFloat(config.TATextfiledPlaceHolderCornerRadius)
     }
     
-    //MARK: HeaderView
-    public func setThemsForHeaderView(view:UIView, config: TAUIView){
-        view.backgroundColor = config.TAviewBackgroundColor
+    //MARK: Validate Button
+    public func setThemsForButton(btn:UIButton, config:TAButton){
+        btn.setTitle(config.TABtnTitleText, for: .normal)
+        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
+        btn.titleLabel?.font = config.TABtnTitleTextFont
+        btn.backgroundColor = config.TABtnBackgrounColor
+        btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
+        btn.layer.masksToBounds = config.TABtnMasksToBounds
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
  
     //MARK: ContainerView
     public func setThemsContainerView(view:UIView, config: TAUIView){
@@ -103,7 +116,7 @@ public class Email_Address: UIView{
         view.layer.shadowOffset = config.TAviewShadowOffset
         view.layer.shadowRadius = CGFloat(config.TAViewCornerRadius)
         view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
-        self.viewContainerHeight.constant = CGFloat(config.TAViewHeight)
+        self.viewContainerHeight.constant = CGFloat(config.TAviewHeight)
     }
     
     //MARK: HeaderView Logo
@@ -120,93 +133,105 @@ public class Email_Address: UIView{
     //MARK: Configure DefaultThems
     func themsConfiguration() -> AuthenticationConfiguration{
         let config = AuthenticationConfiguration()
-        let lblHeader = TALable()
-        let lblFirst = TALable()
-        let tfFirst = TATextFiled()
-        let viewHeader = TAUIView()
-        let btnValide = TAButton()
-        let imgLogo = TAImage()
         let containerView = TAUIView()
-        
-        //MARK: HeaderView Txt
-        lblHeader.TAText = "Log in"
-        lblHeader.TATextColor = .textLblColor
-        lblHeader.TATextAlignment = .left
-        lblHeader.TATextFont = .boldSystemFont(ofSize: 20)
-        
-        //MARK: Txt
-        lblFirst.TAText = "Email Addresss"
-        lblFirst.TATextColor = .textLblColor
-        lblFirst.TATextAlignment = .left
-        lblFirst.TATextFont = .boldSystemFont(ofSize: 14)
-        
-        //MARK:  Textfiled
-        tfFirst.TATextfiledPlaceHolderText = "Enter Email"
-        tfFirst.TATextfiledPlaceHolderTextColor = .black
-        tfFirst.TATextfiledPlaceHolderBorderColor = .textfiledBoarderColor
-        tfFirst.TATextfiledPlaceHolderBorderWidth = 0.5
-        tfFirst.TATextfiledPlaceHolderCornerRadius = 5
-        tfFirst.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 12)
-        
-        //MARK: HeaderView
-        viewHeader.TAviewBackgroundColor = .headerBackgroundColor
-        
+        let imgLogo = TAImage()
+        let lblLogin = TALable()
+        let lblEmail = TALable()
+        let tfView = TAUIView()
+        let textField = TATextFiled()
+        let lblEnterEmailValid = TALable()
+        let btnValid = TAButton()
+       
+   
         //MARK: ContainerView
-        containerView.TAViewCornerRadius = 5
+        containerView.TAViewCornerRadius = 10
         containerView.TAviewShadowColor = .gray
         containerView.TAviewShadowOpacity = 0.4
         containerView.TAviewShadowOffset = CGSize(width: 2.0, height: 2.0)
         containerView.TAviewShadowRadius = 6
-        containerView.TAViewHeight = 350
-        
-        //MARK: valide Btn
-        btnValide.TABtnTitleText = "Send PIN"
-        btnValide.TABtnTitleTextColor = .btnTitleColor
-        btnValide.TABtnBackgrounColor = .btnBackgroundColor
-        btnValide.TABtnTitleTextFont = .boldSystemFont(ofSize: 18)
-        btnValide.TABtnCornerRadius = 8
-        btnValide.TABtnMasksToBounds =  true
+        containerView.TAviewHeight = 350
         
         //MARK: Header Img Logo
         imgLogo.TAImageLogo = UIImage(named: "\("logo2")") ?? UIImage()
         
+        //MARK: Configuration for Login
+        lblLogin.TAText = "Login"
+        lblLogin.TATextColor = #colorLiteral(red: 0.09790506214, green: 0.09823218733, blue: 0.10885299, alpha: 1)
+        lblLogin.TATextAlignment = .left
+        lblLogin.TATextFont = .boldSystemFont(ofSize: 28)
+        
+        //MARK: Txt
+        lblEmail.TAText = "Email"
+        lblEmail.TATextColor = #colorLiteral(red: 0.09790506214, green: 0.09823218733, blue: 0.10885299, alpha: 1)
+        lblEmail.TATextAlignment = .left
+        lblEmail.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        
+        
+        //MARK: View textfiled
+        tfView.TAViewCornerRadius = 5
+        tfView.TAviewborderWidth = 1
+        tfView.TAviewTfBorderColor = #colorLiteral(red: 0.6399982572, green: 0.6399982572, blue: 0.6399982572, alpha: 1)
+        
+        
+        //MARK:  Textfiled
+        textField.TATextfiledPlaceHolderText = "abc@yourdomain.com"
+        textField.TATextfiledPlaceHolderTextColor = #colorLiteral(red: 0.7176470588, green: 0.7333333333, blue: 0.7490196078, alpha: 1)
+        textField.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 14, weight: .medium)
+        
+        //MARK: Enter Valid Email
+        lblEnterEmailValid.TAText = "Please enter valid Email"
+        lblEnterEmailValid.TATextColor = #colorLiteral(red: 0.8632873893, green: 0.2070690691, blue: 0.2673147619, alpha: 1)
+        lblEnterEmailValid.TATextAlignment = .left
+        lblEnterEmailValid.TATextFont = .systemFont(ofSize: 14, weight: .regular)
+        
+        //MARK: valide Btn
+        btnValid.TABtnTitleText = "Validate"
+        btnValid.TABtnTitleTextColor = .white
+        btnValid.TABtnBackgrounColor = #colorLiteral(red: 0.2683097124, green: 0.2734355927, blue: 0.300306946, alpha: 1)
+        btnValid.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
+        btnValid.TABtnCornerRadius = 5
+        btnValid.TABtnMasksToBounds =  true
+        
         //MARK: Assign Values
-        config.headerLbl = lblHeader
-        config.firstLbl = lblFirst
-        config.headerView = viewHeader
-        config.logoImage = imgLogo
-        config.firstTextfiled = tfFirst
-        config.valideBtn = btnValide
-        config.logoImage = imgLogo
         config.containerViewShow = containerView
-       
+        config.logoImage = imgLogo
+        config.loginLbl = lblLogin
+        config.emailLbl = lblEmail
+        config.tfView = tfView
+        config.firstTextfiled = textField
+        config.enterValidEmail = lblEnterEmailValid
+        config.validBtn = btnValid
+        
+
         return config
     }
     
     //MARK: Set Configurations
     public func setThemeWithEmailConfiguration(config:AuthenticationConfiguration){
         
-        self.setThemsForHeaderView(view: viewHeader, config: config.headerView)
+       // self.setThemsContainerView(view: viewContainerEmail, config: config.containerViewShow)
         
-        self.setThemsForHeaderLable(lbl: lblHeaderLogin, config: config.headerLbl)
+        self.setThemsForHeaderViewImageORLogo(img: imgLogo, config: config.logoImage)
+        
+        self.setThemsForLable(lbl: lblLogin, config: config.loginLbl)
+        
+        self.setThemsForLable(lbl: lblEmail, config: config.emailLbl)
+        
+        self.setThemsForTextFieldView(view: viewTfEmail, config: config.tfView)
         
         self.setThemsForTextField(textfiled: tfEmail, config: config.firstTextfiled)
         
-        self.setThemsForButton(btn: btnSendPIN, config: config.valideBtn)
+        self.setThemsForLable(lbl: lblEnterValideEmail, config: config.enterValidEmail)
         
-        self.setThemsForHeaderLable(lbl: lblEmailAddress, config: config.firstLbl)
+        self.setThemsForButton(btn: btnValid, config: config.validBtn)
         
-        self.setThemsForHeaderViewImageORLogo(img: imgHeaderLogo, config: config.logoImage)
         
-        self.setThemsForHeaderView(view: viewSpaceHeight, config: config.headerView)
         
-        self.setThemsContainerView(view: viewContainerEmail, config: config.containerViewShow)
         
-        self.setThemsContainerView(view: viewContainerEmail, config: config.containerViewShow)
     }
     
     //MARK: IBAction
-    @IBAction func sendPINClicked(_ sender:UIButton){
+    @IBAction func validBtnACtion(_ sender:UIButton){
  
         let emailValid = self.tfEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let email = ValidationClass.shared.isEmailValid(email: emailValid)

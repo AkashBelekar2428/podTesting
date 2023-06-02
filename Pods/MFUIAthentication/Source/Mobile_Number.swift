@@ -16,16 +16,17 @@ public protocol MobileNumberDelegate{
 public class Mobile_Number:UIView {
     
     //MARK: IBOutlets
-    @IBOutlet weak public var imgHeaderLogo:UIImageView!
-    @IBOutlet weak public var lblHeaderLogin:UILabel!
-    @IBOutlet weak public var viewHeader:UIView!
-    @IBOutlet weak public var btnSendPin:UIButton!
     @IBOutlet weak public var viewContainerMobile:UIView!
-    @IBOutlet weak public var viewSpaceHeight:UIView!
-    @IBOutlet weak public var tfMobileNum:UITextField!
+    @IBOutlet weak public var imgLogo:UIImageView!
+    @IBOutlet weak public var lblLogin:UILabel!
     @IBOutlet weak public var lblMobile:UILabel!
-    @IBOutlet weak public var btnReminder:UIButton!
-    @IBOutlet weak public var btnCountrycode:UIButton!
+    @IBOutlet weak public var lblCountryCode:UILabel!
+    @IBOutlet weak public var lblIconCountryCode:UILabel!
+    @IBOutlet weak public var viewTfMobileNumber:UIView!
+    @IBOutlet weak public var viewCountryCode:UIView!
+    @IBOutlet weak public var tfMobileNumber:UITextField!
+    @IBOutlet weak public var lblEnterValidMobNum:UILabel!
+    @IBOutlet weak public var btnValidate:UIButton!
     @IBOutlet weak public var viewContainerHeight: NSLayoutConstraint!
     
     //MARK: Variables
@@ -61,23 +62,22 @@ public class Mobile_Number:UIView {
         lbl.layer.borderWidth = config.TATextBorderWidth
     }
     
-    //MARK: Valide Button
-    public func setThemsForButton(btn:UIButton, config:TAButton){
-        btn.setTitle(config.TABtnTitleText, for: .normal)
-        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
-        btn.titleLabel?.font = config.TABtnTitleTextFont
-        btn.backgroundColor = config.TABtnBackgrounColor
-        btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
-        btn.layer.masksToBounds = config.TABtnMasksToBounds
+    
+    //MARK: View
+    public func setThemsForView(view:UIView, config:TAUIView){
+        view.layer.borderColor = config.TAviewTfBorderColor.cgColor
+        view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
+        view.layer.borderWidth = CGFloat(config.TAviewborderWidth)
+        
     }
     
-    //MARK: Country Button
+    //MARK: Country Code Button
     public func setThemsForCountryCodeButton(btn:UIButton, config:TAButton){
         btn.setTitle(config.TABtnTitleText, for: .normal)
         btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
         btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
-        btn.layer.borderColor = config.TABtnBoarderColor.cgColor
-        btn.layer.borderWidth = CGFloat(config.TABtnBoarderWidth)
+        btn.layer.borderColor = config.TABtnBorderColor.cgColor
+        btn.layer.borderWidth = CGFloat(config.TABtnBorderWidth)
     }
     
     
@@ -91,11 +91,18 @@ public class Mobile_Number:UIView {
         textfiled.layer.cornerRadius = CGFloat(config.TATextfiledPlaceHolderCornerRadius)
     }
     
-    //MARK: HeaderView
-    public func setThemsForHeaderView(view:UIView, config: TAUIView){
-        view.backgroundColor = config.TAviewBackgroundColor
+    
+    //MARK: Valide Button
+    public func setThemsForButton(btn:UIButton, config:TAButton){
+        btn.setTitle(config.TABtnTitleText, for: .normal)
+        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
+        btn.titleLabel?.font = config.TABtnTitleTextFont
+        btn.backgroundColor = config.TABtnBackgrounColor
+        btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
+        btn.layer.masksToBounds = config.TABtnMasksToBounds
     }
     
+   
     //MARK: ContainerView
     public func setThemsContainerView(view:UIView, config: TAUIView){
         view.layer.shadowColor = config.TAviewShadowColor.cgColor
@@ -103,7 +110,7 @@ public class Mobile_Number:UIView {
         view.layer.shadowOffset = config.TAviewShadowOffset
         view.layer.shadowRadius = CGFloat(config.TAViewCornerRadius)
         view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
-        self.viewContainerHeight.constant = CGFloat(config.TAViewHeight)
+        self.viewContainerHeight.constant = CGFloat(config.TAviewHeight)
     }
     
     //MARK: HeaderLogo
@@ -120,102 +127,131 @@ public class Mobile_Number:UIView {
     //MARK: Configure DefaultThems
     func themsConfiguration() -> AuthenticationConfiguration{
         let config = AuthenticationConfiguration()
-        let lblHeader = TALable()
-        let lblFirst = TALable()
-        let tfFirst = TATextFiled()
-        let viewHeader = TAUIView()
-        let btnValide = TAButton()
-        let imgLogo = TAImage()
         let containerView = TAUIView()
-        let btnCountryCode = TAButton()
+        let imgLogo = TAImage()
+        let lblLogin = TALable()
+        let lblMobile = TALable()
+        let lblCountryCode = TALable()
+        let tfView = TAUIView()
+        let viewCountryCode = TAUIView()
+        let btnCuntryCode = TAButton()
+        let textField = TATextFiled()
+        let lblEnterValidMobile = TALable()
+        let btnValide = TAButton()
         
-        //MARK: HeaderView Txt
-        lblHeader.TAText = "Log in"
-        lblHeader.TATextColor = .textLblColor
-        lblHeader.TATextAlignment = .left
-        lblHeader.TATextFont = .boldSystemFont(ofSize: 20)
-        
-        //MARK: Mobile Txt
-        lblFirst.TAText = "Mobile"
-        lblFirst.TATextColor = .textLblColor
-        lblFirst.TATextAlignment = .left
-        lblFirst.TATextFont = .systemFont(ofSize: 16)
-        
-        //MARK: Email Textfiled
-        tfFirst.TATextfiledPlaceHolderText = "Enter Mobile Number"
-        tfFirst.TATextfiledPlaceHolderTextColor = .black
-        tfFirst.TATextfiledPlaceHolderBorderColor = .textfiledBoarderColor
-        tfFirst.TATextfiledPlaceHolderBorderWidth = 0.5
-        tfFirst.TATextfiledPlaceHolderCornerRadius = 5
-        tfFirst.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 14)
-        
-        //MARK: HeaderView
-        viewHeader.TAviewBackgroundColor = .headerBackgroundColor
         
         //MARK: ContainerView
-        containerView.TAViewCornerRadius = 5
+        containerView.TAViewCornerRadius = 10
         containerView.TAviewShadowColor = .gray
         containerView.TAviewShadowOpacity = 0.4
         containerView.TAviewShadowOffset = CGSize(width: 2.0, height: 2.0)
         containerView.TAviewShadowRadius = 6
-        containerView.TAViewHeight = 350
+        containerView.TAviewHeight = 350
         
-        //MARK: valide Btn
-        btnValide.TABtnTitleText = "Send PIN"
-        btnValide.TABtnTitleTextColor = .btnTitleColor
-        btnValide.TABtnBackgrounColor = .btnBackgroundColor
-        btnValide.TABtnTitleTextFont = .boldSystemFont(ofSize: 18)
-        btnValide.TABtnCornerRadius = 4
-        btnValide.TABtnMasksToBounds = true
         
         //MARK: Header Img Logo
         imgLogo.TAImageLogo = UIImage(named: "\("logo2")") ?? UIImage()
         
-        //MARK: Country Code Btn
-        btnCountryCode.TABtnTitleText = "+91"
-        btnCountryCode.TABtnBoarderColor = .textfiledBoarderColor
-        btnCountryCode.TABtnCornerRadius = 4
-        btnCountryCode.TABtnTitleTextColor = .black
-        btnCountryCode.TABtnBoarderWidth = 1
         
-        config.headerLbl = lblHeader
-        config.firstLbl = lblFirst
-        config.headerView = viewHeader
-        config.logoImage = imgLogo
-        config.firstTextfiled = tfFirst
-        config.valideBtn = btnValide
+        //MARK: HeaderView Txt
+        lblLogin.TAText = "Login"
+        lblLogin.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblLogin.TATextAlignment = .left
+        lblLogin.TATextFont = .boldSystemFont(ofSize: 28)
+        
+        //MARK: Mobile Txt
+        lblMobile.TAText = "Mobile"
+        lblMobile.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblMobile.TATextAlignment = .left
+        lblMobile.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        
+        
+        //MARK: Mobile TextFiled View
+        tfView.TAViewCornerRadius = 5
+        tfView.TAviewborderWidth = 1
+        tfView.TAviewTfBorderColor = #colorLiteral(red: 0.6399982572, green: 0.6399982572, blue: 0.6399982572, alpha: 1)
+        
+        
+        //MARK: Country Code Label
+        lblCountryCode.TAText = "+91"
+        lblCountryCode.TATextColor = .black
+        lblCountryCode.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        lblCountryCode.TATextAlignment = .left
+        lblCountryCode.TATextNumberOfLines = 0
+        
+        
+        //MARK: Email Textfiled
+        textField.TATextfiledPlaceHolderText = "abc@yourdomain.com"
+        textField.TATextfiledPlaceHolderTextColor = #colorLiteral(red: 0.7176470588, green: 0.7333333333, blue: 0.7490196078, alpha: 1)
+        textField.TATextfiledPlaceHolderTextFont = .systemFont(ofSize: 14, weight: .medium)
+        
+        
+        //MARK: CountryCode View
+        viewCountryCode.TAviewTfBorderColor = #colorLiteral(red: 0.7176470588, green: 0.7333333333, blue: 0.7490196078, alpha: 1)
+        viewCountryCode.TAviewborderWidth = 1
+        viewCountryCode.TAViewCornerRadius = 5
+        
+        
+        //MARK: Enter Valid Mobile
+        lblEnterValidMobile.TAText = "Please enter valid Mobile Number"
+        lblEnterValidMobile.TATextFont = .systemFont(ofSize: 14, weight: .regular)
+        lblEnterValidMobile.TATextColor = #colorLiteral(red: 0.862745098, green: 0.2078431373, blue: 0.2666666667, alpha: 1)
+        
+        //MARK: valide Btn
+        btnValide.TABtnTitleText = "Validate"
+        btnValide.TABtnTitleTextColor = .white
+        btnValide.TABtnBackgrounColor = #colorLiteral(red: 0.2745098039, green: 0.2745098039, blue: 0.3019607843, alpha: 1)
+        btnValide.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
+        btnValide.TABtnCornerRadius = 5
+        btnValide.TABtnMasksToBounds = true
+        
+       
+        //MARK: Assign
         config.containerViewShow = containerView
-        config.countryCodeBtn = btnCountryCode
+        config.logoImage = imgLogo
+        config.loginLbl = lblLogin
+        config.mobileLbl = lblMobile
+        config.countryCountryLbl = lblCountryCode
+        config.countryCodeView = viewCountryCode
+        config.tfView = tfView
+        config.countryCodeBtn = btnCuntryCode
+        config.firstTextfiled = textField
+        config.enterValidMobileNumber = lblEnterValidMobile
+        config.validBtn = btnValide
         
+     
         return config
     }
     
     //MARK: Set Configurations
     public func setThemeWithMobileConfiguration(config:AuthenticationConfiguration){
-        self.setThemsForHeaderView(view: viewHeader, config: config.headerView)
         
-        self.setThemsForLable(lbl: lblHeaderLogin, config: config.headerLbl)
+    //    self.setThemsContainerView(view: viewContainerMobile, config: config.containerViewShow)
         
-        self.setThemsForLable(lbl: lblMobile, config: config.firstLbl)
+        self.setThemsForHeaderViewImageORLogo(img: imgLogo, config: config.logoImage)
+
+        self.setThemsForLable(lbl: lblLogin, config: config.loginLbl)
         
-        self.setThemsForCountryCodeButton(btn: btnCountrycode, config: config.countryCodeBtn)
+        self.setThemsForLable(lbl: lblMobile, config: config.mobileLbl)
         
-        self.setThemsForTextField(textfiled: tfMobileNum, config: config.firstTextfiled)
+        self.setThemsForView(view: viewTfMobileNumber, config: config.tfView)
         
-        self.setThemsForHeaderViewImageORLogo(img: imgHeaderLogo, config: config.logoImage)
+        self.setThemsForView(view: viewCountryCode, config: config.countryCodeView)
         
-        self.setThemsForHeaderView(view: viewSpaceHeight, config: config.headerView)
+        self.setThemsForLable(lbl: lblCountryCode, config: config.countryCountryLbl)
         
-        self.setThemsForButton(btn: btnSendPin, config: config.valideBtn)
+        self.setThemsForTextField(textfiled: tfMobileNumber, config: config.firstTextfiled)
         
-        self.setThemsContainerView(view: viewContainerMobile, config: config.containerViewShow)
+        self.setThemsForLable(lbl:lblEnterValidMobNum , config: config.enterValidMobileNumber)
+        
+        self.setThemsForButton(btn: btnValidate, config: config.validBtn)
     }
     
     //MARK: Custom methods
     func commonInit() {
         guard let view = loadViewFromNib() else { return }
         view.frame = self.bounds
-        tfMobileNum.delegate = self
+        tfMobileNumber.delegate = self
         setupToolBar()
         self.addSubview(view)
     }
@@ -233,7 +269,7 @@ public class Mobile_Number:UIView {
         let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         barBtn.items = [flexSpace,flexSpace,doneBtn]
         barBtn.sizeToFit()
-        tfMobileNum.inputAccessoryView = barBtn
+        tfMobileNumber.inputAccessoryView = barBtn
     }
     
     @objc func doneBtnTapped(_ tap:UITapGestureRecognizer){
@@ -241,13 +277,13 @@ public class Mobile_Number:UIView {
     }
     
     //MARK: IBAction
-    @IBAction func mobileValidations(_ sender:UIButton) {
-        let phoneNumber = self.tfMobileNum.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+    @IBAction func validBtnAction(_ sender:UIButton) {
+        let phoneNumber = self.tfMobileNumber.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         
         let validatePhone = ValidationClass.shared.isPhoneValid(phone: phoneNumber)
         
         if validatePhone.1 == true {
-            delegate?.sendPINAction(mobileNumber: tfMobileNum.text ?? "")
+            delegate?.sendPINAction(mobileNumber: tfMobileNumber.text ?? "")
         } else {
             if let topController = TopControllerManager.getTopViewController() {
                 AlertManager.shared.showAlert(title: App_Alert_Title, msg: validatePhone.0, action: ok, viewController: topController)
@@ -281,7 +317,7 @@ extension Mobile_Number:UITextFieldDelegate{
     
     //MARK: valid till 10 Digit
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if textField == tfMobileNum{
+        if textField == tfMobileNumber{
             
             if range.location < 10{
                 print("range",range.location)
@@ -300,5 +336,4 @@ extension Mobile_Number: PassDataFromPickerProtocol{
         
         print("PickerValue",pickerValue)
     }
-    
 }

@@ -11,19 +11,46 @@ import Foundation
 public class AuthenticationConfiguration{
     
     //MARK: Variables
-    public var headerLbl = TALable()
-    public var firstLbl = TALable()
-    public var secondLbl = TALable()
+    
+    
+    //MARK: Auth Variables
+    public var loginLbl = TALable()
+    public var tfView = TAUIView()
+    public var authLbl = TALable()
+    public var passwordLbl = TALable()
+    public var iconLbl = TALable()
+    public var iconEyeBtn = TAButton()
+    public var enterValidAuthLbl = TALable()
+    public var enterValidPasswordLBl = TALable()
     public var firstTextfiled = TATextFiled()
     public var secondTextfiled = TATextFiled()
-    public var valideBtn = TAButton()
-    public var resendPINBtn = TAButton()
-    public var headerView = TAUIView()
+    public var validBtn = TAButton()
+    public var forgotPasswordBtn = TAButton()
     public var logoImage = TAImage()
     public var containerViewShow = TAUIView()
-    public var tfView = TAUIView()
     public var countryCodeBtn = TAButton()
+    
+    
+    //MARK: PIN variables
+    public var pinDescription = TALable()
+    public var PinLbl = TALable()
+    public var enterValidPin = TALable()
+    public var resendBtn = TAButton()
+    
+    
+    //MARK: Email Variables
+    public var emailLbl = TALable()
+    public var enterValidEmail = TALable()
+    
+    
+    //MARK: MAobile Variables
+    public var mobileLbl = TALable()
+    public var enterValidMobileNumber = TALable()
+    public var countryCountryLbl = TALable()
+    public var countryCodeView = TAUIView()
 
+    
+    
     public var viewType: AuthType = .none
     
     public init() {}

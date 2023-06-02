@@ -18,16 +18,14 @@ protocol GenericPINViewDelegate : AnyObject {
 public class PINView: UIView {
     
     //MARK: IBOutlets
-    @IBOutlet weak public var imgHeaderLogo:UIImageView!
-    @IBOutlet weak public var lblHeaderLogin:UILabel!
-    @IBOutlet weak public var viewHeader:UIView!
-    @IBOutlet weak public var lblPinDescription:UILabel!
-    @IBOutlet weak public var btnValidate:UIButton!
-    @IBOutlet weak public var lblPin:UILabel!
-    @IBOutlet weak public var btnResendPin:UIButton!
-    @IBOutlet weak public var viewSpaceHeight:UIView!
     @IBOutlet weak public var viewContainerPIN:UIView!
-    @IBOutlet weak public var lblPINsAlpha:UILabel!
+    @IBOutlet weak public var imgLogo:UIImageView!
+    @IBOutlet weak public var lblLogin:UILabel!
+    @IBOutlet weak public var lblPinDescription:UILabel!
+    @IBOutlet weak public var lblPin:UILabel!
+    @IBOutlet weak public var lblEnterValidPIN:UILabel!
+    @IBOutlet weak public var btnValidate:UIButton!
+    @IBOutlet weak public var btnResendPin:UIButton!
     @IBOutlet weak public var viewContainerHeight: NSLayoutConstraint!
     
     @IBOutlet weak public var bgViewVerifyPin: UIView!
@@ -250,7 +248,13 @@ public class PINView: UIView {
         return nib
     }
     
-    //MARK: lables
+    //MARK: ImageView Configuration for Logo
+    public func setThemsForLogo(img:UIImageView, config:TAImage){
+        img.image = config.TAImageLogo
+    }
+    
+    
+    //MARK: Lable Configuration for login
     public func setThemsForLable(lbl:UILabel, config:TALable){
         lbl.text = config.TAText
         lbl.textColor = config.TATextColor
@@ -286,11 +290,6 @@ public class PINView: UIView {
         textfiled.layer.borderWidth = CGFloat(config.TATextfiledPlaceHolderBorderWidth)
     }
     
-    //MARK: HeaderView
-    public func setThemsForHeaderView(view:UIView, config: TAUIView) {
-        view.backgroundColor = config.TAviewBackgroundColor
-    }
-    
     //MARK: ContainerView
     public func setThemsContainerView(view:UIView, config: TAUIView) {
         view.layer.shadowColor = config.TAviewShadowColor.cgColor
@@ -298,13 +297,9 @@ public class PINView: UIView {
         view.layer.shadowOffset = config.TAviewShadowOffset
         view.layer.shadowRadius = CGFloat(config.TAViewCornerRadius)
         view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
-        self.viewContainerHeight.constant = CGFloat(config.TAViewHeight)
+        self.viewContainerHeight.constant = CGFloat(config.TAviewHeight)
     }
     
-    //MARK: Header Logo
-    public func setThemsForHeaderViewImageORLogo(img: UIImageView, config: TAImage) {
-        img.image = config.TAImageLogo
-    }
     
     //MARK: SetDefaultThems
     public func setPINDefaultThemes(){
@@ -315,70 +310,75 @@ public class PINView: UIView {
     //MARK: Configure DefaultThems
     func themsConfiguration() -> AuthenticationConfiguration {
         let config = AuthenticationConfiguration()
-        let lblHeader = TALable()
-        let lblFirst = TALable()
-        let lblSecond = TALable()
-        let viewHeader = TAUIView()
-        let btnValide = TAButton()
-        let btnResend = TAButton()
         let imgLogo = TAImage()
+        let lblLogin = TALable()
+        let lblPinDescription = TALable()
+        let lblPIN = TALable()
+        let lblEnterValidPIN = TALable()
+        let btnValid = TAButton()
+        let btnResend = TAButton()
         let containerView = TAUIView()
         
-        //MARK: HeaderView Txt
-        lblHeader.TAText = "Log in"
-        lblHeader.TATextColor = .textLblColor
-        lblHeader.TATextAlignment = .left
-        lblHeader.TATextFont = .boldSystemFont(ofSize: 20)
-        
-        //MARK: Description Txt
-        lblFirst.TAText = "Please enter your 6-Digit PIN"
-        lblFirst.TATextColor = .textLblColor
-        lblFirst.TATextAlignment = .left
-        lblFirst.TATextFont = .systemFont(ofSize: 14)
-        
-        //MARK: PIN Txt
-        lblSecond.TAText = "PIN"
-        lblSecond.TATextColor = .textLblColor
-        lblSecond.TATextAlignment = .left
-        lblSecond.TATextFont = .systemFont(ofSize: 16)
-        
-        //MARK: HeaderView
-        viewHeader.TAviewBackgroundColor = .headerBackgroundColor
-        
         //MARK: ContainerView
-        containerView.TAViewCornerRadius = 5
+        containerView.TAViewCornerRadius = 10
         containerView.TAviewShadowColor = .gray
         containerView.TAviewShadowOpacity = 0.4
         containerView.TAviewShadowOffset = CGSize(width: 2.0, height: 2.0)
         containerView.TAviewShadowRadius = 6
-        containerView.TAViewHeight = 350
+        containerView.TAviewHeight = 350
         
-        //MARK: valide Btn
-        btnValide.TABtnTitleText = "Validate"
-        btnValide.TABtnTitleTextColor = .btnTitleColor
-        btnValide.TABtnBackgrounColor = .btnBackgroundColor
-        btnValide.TABtnTitleTextFont = .boldSystemFont(ofSize: 18)
-        btnValide.TABtnCornerRadius = 4
-        btnValide.TABtnMasksToBounds =  true
+        //MARK: Config Logo
+        imgLogo.TAImageLogo = UIImage(named: "") ?? #imageLiteral(resourceName: "logo2")
+        
+        //MARK: Config Login Label
+        lblLogin.TAText = "Login"
+        lblLogin.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblLogin.TATextFont = .boldSystemFont(ofSize: 28)
+        lblLogin.TATextAlignment = .left
+        lblLogin.TATextNumberOfLines = 0
+        
+        //MARK: Description Txt
+        lblPinDescription.TAText = "Please enter your 6 Digit PIN"
+        lblPinDescription.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblPinDescription.TATextAlignment = .left
+        lblPinDescription.TATextFont = .systemFont(ofSize: 14, weight: .regular)
+        
+        //MARK: PIN Txt
+        lblPIN.TAText = "PIN"
+        lblPIN.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblPIN.TATextAlignment = .left
+        lblPIN.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        
+        //MARK: Configu Enter Valid PIN
+        lblEnterValidPIN.TAText = "Please enter valid PIN"
+        lblEnterValidPIN.TATextColor = #colorLiteral(red: 0.862745098, green: 0.2070690691, blue: 0.2673147619, alpha: 1)
+        lblEnterValidPIN.TATextAlignment = .left
+        lblEnterValidPIN.TATextFont = .systemFont(ofSize: 13, weight: .regular)
+        
+        //MARK: Valide Btn
+        btnValid.TABtnTitleText = "Validate"
+        btnValid.TABtnTitleTextColor = .white
+        btnValid.TABtnBackgrounColor = #colorLiteral(red: 0.2726369798, green: 0.2734699845, blue: 0.3002841473, alpha: 1)
+        btnValid.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
+        btnValid.TABtnCornerRadius = 5
+        btnValid.TABtnMasksToBounds =  true
         
         //MARK: Resend Btn
-        btnResend.TABtnTitleText = "Did not receive PIN? Click here to Resend"
-        btnResend.TABtnTitleTextColor = .textLblColor
-        btnResend.TABtnBackgrounColor = .btnBackgroundColor
-        btnResend.TABtnTitleTextFont = .systemFont(ofSize: 13)
+        btnResend.TABtnTitleText = "Did not receive PIN? Resend"
+        btnResend.TABtnTitleTextColor = #colorLiteral(red: 0.1054552868, green: 0.09205854684, blue: 0.6702544689, alpha: 1)
+        btnResend.TABtnBackgrounColor = .white
+        btnResend.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
         btnResend.TABtnBackgrounColor = .btnTitleColor
         
-        //MARK: Header Img Logo
-        imgLogo.TAImageLogo = UIImage(named: "\("logo2")") ?? UIImage()
         
         //MARK: Assign Values
-        config.headerLbl = lblHeader
-        config.firstLbl = lblFirst
-        config.secondLbl = lblSecond
-        config.headerView = viewHeader
         config.logoImage = imgLogo
-        config.valideBtn = btnValide
-        config.resendPINBtn = btnResend
+        config.loginLbl = lblLogin
+        config.pinDescription = lblPinDescription
+        config.PinLbl = lblPIN
+        config.enterValidPin = lblEnterValidPIN
+        config.validBtn = btnValid
+        config.resendBtn = btnResend
         config.containerViewShow = containerView
         
         return config
@@ -386,28 +386,27 @@ public class PINView: UIView {
     
     //MARK: Set Configurations
     public func setThemeWithPINConfiguration(config:AuthenticationConfiguration) {
-        self.setThemsForHeaderView(view: viewHeader, config: config.headerView)
+      
+        self.setThemsForLable(lbl: lblLogin, config: config.loginLbl)
         
-        self.setThemsForLable(lbl: lblHeaderLogin, config: config.headerLbl)
+        self.setThemsForLogo(img: imgLogo, config: config.logoImage)
         
-        self.setThemsForLable(lbl: lblPin, config: config.secondLbl)
+        self.setThemsForLable(lbl: lblPinDescription, config: config.pinDescription)
         
-        self.setThemsForLable(lbl: lblPinDescription, config: config.firstLbl)
+        self.setThemsForLable(lbl: lblPin, config: config.PinLbl)
         
-        self.setThemsForButton(btn: btnValidate, config: config.valideBtn)
+        self.setThemsForLable(lbl: lblEnterValidPIN, config: config.enterValidPin)
         
-        self.setThemsForResentPINButton(btn: btnResendPin, config: config.resendPINBtn)
+        self.setThemsForButton(btn: btnValidate, config: config.validBtn)
         
-        self.setThemsForHeaderViewImageORLogo(img: imgHeaderLogo, config: config.logoImage)
+        self.setThemsForButton(btn: btnResendPin, config: config.resendBtn)
         
-        self.setThemsContainerView(view: viewContainerPIN, config: config.containerViewShow)
-        
-        self.setThemsForHeaderView(view: viewSpaceHeight, config: config.headerView)
+       // self.setThemsContainerView(view: viewContainerPIN, config: config.containerViewShow)
         
     }
     
     //MARK: IBAction
-    @IBAction func sendPinAction(_ sender:UIButton) {
+    @IBAction func validPINBtnAction(_ sender:UIButton) {
         let pinValide = self.pinVarTf.text?.trimmingCharacters(in: .whitespacesAndNewlines)
         
         let trimPIN = ValidationClass.shared.isPINValid(pin: pinValide!)

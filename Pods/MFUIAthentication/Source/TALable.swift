@@ -14,6 +14,7 @@ public class TALable{
     //MARK: Variables
     public var TAText: String = ""
     public var TATextColor:UIColor = UIColor.black
+    public var TAIconColor: UIColor = UIColor.gray
     public var TATextFont: UIFont = UIFont.systemFont(ofSize: 0)
     public var TATextNumberOfLines: Int = 0
     public var TATextAlignment: NSTextAlignment = .left
