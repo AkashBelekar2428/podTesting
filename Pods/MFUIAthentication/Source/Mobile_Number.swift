@@ -132,6 +132,7 @@ public class Mobile_Number:UIView {
         let lblLogin = TALable()
         let lblMobile = TALable()
         let lblCountryCode = TALable()
+        let lblCountryCodeIcon = TALable()
         let tfView = TAUIView()
         let viewCountryCode = TAUIView()
         let btnCuntryCode = TAButton()
@@ -179,6 +180,13 @@ public class Mobile_Number:UIView {
         lblCountryCode.TATextAlignment = .left
         lblCountryCode.TATextNumberOfLines = 0
         
+        //MARK: Country Code Icon Label
+        lblCountryCodeIcon.TAText = "V"
+        lblCountryCodeIcon.TATextColor = .black
+        lblCountryCodeIcon.TATextFont = .systemFont(ofSize: 14, weight: .medium)
+        lblCountryCodeIcon.TATextAlignment = .right
+        lblCountryCodeIcon.TATextNumberOfLines = 0
+        
         
         //MARK: Email Textfiled
         textField.TATextfiledPlaceHolderText = "abc@yourdomain.com"
@@ -212,6 +220,7 @@ public class Mobile_Number:UIView {
         config.loginLbl = lblLogin
         config.mobileLbl = lblMobile
         config.countryCountryLbl = lblCountryCode
+        config.countryCodeIcon = lblCountryCodeIcon
         config.countryCodeView = viewCountryCode
         config.tfView = tfView
         config.countryCodeBtn = btnCuntryCode
@@ -239,6 +248,8 @@ public class Mobile_Number:UIView {
         self.setThemsForView(view: viewCountryCode, config: config.countryCodeView)
         
         self.setThemsForLable(lbl: lblCountryCode, config: config.countryCountryLbl)
+        
+        self.setThemsForLable(lbl: lblIconCountryCode, config: config.countryCodeIcon)
         
         self.setThemsForTextField(textfiled: tfMobileNumber, config: config.firstTextfiled)
         

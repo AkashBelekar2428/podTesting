@@ -48,6 +48,7 @@ public class AuthenticationConfiguration{
     public var enterValidMobileNumber = TALable()
     public var countryCountryLbl = TALable()
     public var countryCodeView = TAUIView()
+    public var countryCodeIcon = TALable()
 
     
     
