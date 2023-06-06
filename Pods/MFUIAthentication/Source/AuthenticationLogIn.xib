@@ -31,14 +31,14 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view clipsSubviews="YES" contentMode="scaleToFill" id="Bs1-YE-CpR">
+        <view contentMode="scaleToFill" id="Bs1-YE-CpR">
             <rect key="frame" x="0.0" y="0.0" width="541" height="765"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lgp-MX-ehR">
                     <rect key="frame" x="30" y="59" width="481" height="450"/>
                     <subviews>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YMI-7s-Q4I">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YMI-7s-Q4I">
                             <rect key="frame" x="0.0" y="20" width="150" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="Ss7-RS-8Rc"/>
@@ -72,9 +72,12 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LmN-1M-4E4">
-                                    <rect key="frame" x="50" y="15.666666666666659" width="416" height="18.666666666666671"/>
+                                    <rect key="frame" x="50" y="5" width="416" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="epz-Gj-pu7"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                 </textField>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -87,13 +90,13 @@
                                 <constraint firstAttribute="trailing" secondItem="LmN-1M-4E4" secondAttribute="trailing" constant="15" id="tbh-LT-uTX"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eb2-sf-eU8">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eb2-sf-eU8">
                             <rect key="frame" x="0.0" y="190" width="481" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5Q-lD-44u">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5Q-lD-44u">
                             <rect key="frame" x="0.0" y="275" width="481" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <nil key="textColor"/>
@@ -114,9 +117,12 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Qsk-MX-4c8">
-                                    <rect key="frame" x="50" y="15.666666666666687" width="381" height="18.666666666666671"/>
+                                    <rect key="frame" x="50" y="5" width="381" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="9BZ-ap-M98"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <textInputTraits key="textInputTraits"/>
+                                    <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmM-E2-bkN">
                                     <rect key="frame" x="446" y="15" width="20" height="20"/>
@@ -212,6 +218,7 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Lgp-MX-ehR" firstAttribute="leading" secondItem="Qi9-Ig-olM" secondAttribute="leading" constant="30" id="OLC-wU-dcO"/>
+                <constraint firstItem="Lgp-MX-ehR" firstAttribute="centerX" secondItem="Bs1-YE-CpR" secondAttribute="centerX" id="bYK-D2-rMA"/>
                 <constraint firstItem="Lgp-MX-ehR" firstAttribute="top" secondItem="Qi9-Ig-olM" secondAttribute="top" id="w6Q-bM-zmi"/>
                 <constraint firstItem="Qi9-Ig-olM" firstAttribute="trailing" secondItem="Lgp-MX-ehR" secondAttribute="trailing" constant="30" id="xfT-1X-mt6"/>
             </constraints>

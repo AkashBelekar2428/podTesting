@@ -10,9 +10,6 @@ import Foundation
 //MARK: AuthenticationConfiguration class
 public class AuthenticationConfiguration{
     
-    //MARK: Variables
-    
-    
     //MARK: Auth Variables
     public var loginLbl = TALable()
     public var tfView = TAUIView()
@@ -29,6 +26,7 @@ public class AuthenticationConfiguration{
     public var logoImage = TAImage()
     public var containerViewShow = TAUIView()
     public var countryCodeBtn = TAButton()
+    public var color = TAColor()
     
     
     //MARK: PIN variables

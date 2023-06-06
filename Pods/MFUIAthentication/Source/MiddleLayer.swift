@@ -111,6 +111,10 @@ public class MiddleLayer : TAAuthProtocols {
         }
     }
     
+    
+    
+    
+    
     //MARK: ConfigureTypesAndSetComponent
     private func ConfigureTypesAndSetComponent() {
         let dataObj = self.TAAuthRespObj?.data

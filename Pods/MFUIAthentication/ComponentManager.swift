@@ -133,6 +133,7 @@ public class ComponentManager{
                     UsernamePasswordUI.tag = self.tagForComponent
                     UsernamePasswordUI.delegate = self
                     UsernamePasswordUI.setDefaultThems()
+                    UsernamePasswordUI.authType = type
                     return UsernamePasswordUI
                 }
             }

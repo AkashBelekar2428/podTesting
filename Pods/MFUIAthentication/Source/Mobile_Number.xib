@@ -18,7 +18,7 @@
                 <outlet property="lblIconCountryCode" destination="ych-QS-U7e" id="BpD-Ue-uQM"/>
                 <outlet property="lblLogin" destination="vkb-XD-DWL" id="vWa-Hl-Pxd"/>
                 <outlet property="lblMobile" destination="wzS-nz-xeH" id="ca8-ko-iv2"/>
-                <outlet property="tfMobileNumber" destination="y50-L6-SHs" id="TXi-sF-5Fd"/>
+                <outlet property="tfMobileNumber" destination="Z4U-rM-zXq" id="mpB-hD-aXs"/>
                 <outlet property="viewContainerHeight" destination="140-br-2MT" id="QfD-gh-UrC"/>
                 <outlet property="viewContainerMobile" destination="qZ3-cJ-B3p" id="LxP-8X-bbu"/>
                 <outlet property="viewCountryCode" destination="wWu-Lo-uCe" id="N1n-Fh-PLJ"/>
@@ -86,20 +86,23 @@
                                         <constraint firstAttribute="trailing" secondItem="ych-QS-U7e" secondAttribute="trailing" constant="15" id="pg1-ke-KbN"/>
                                     </constraints>
                                 </view>
-                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imN-Tz-U8f">
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="imN-Tz-U8f">
                                     <rect key="frame" x="90" y="0.0" width="391" height="50"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="y50-L6-SHs">
-                                            <rect key="frame" x="15" y="15.666666666666659" width="361" height="18.666666666666671"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z4U-rM-zXq">
+                                            <rect key="frame" x="15" y="5" width="361" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="hCr-3R-Tw5"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                         </textField>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
-                                        <constraint firstItem="y50-L6-SHs" firstAttribute="centerY" secondItem="imN-Tz-U8f" secondAttribute="centerY" id="wku-FP-9LW"/>
-                                        <constraint firstAttribute="trailing" secondItem="y50-L6-SHs" secondAttribute="trailing" constant="15" id="yoT-XE-Rp8"/>
-                                        <constraint firstItem="y50-L6-SHs" firstAttribute="leading" secondItem="imN-Tz-U8f" secondAttribute="leading" constant="15" id="zk9-vv-BMi"/>
+                                        <constraint firstItem="Z4U-rM-zXq" firstAttribute="leading" secondItem="imN-Tz-U8f" secondAttribute="leading" constant="15" id="JjE-B0-TMt"/>
+                                        <constraint firstItem="Z4U-rM-zXq" firstAttribute="centerY" secondItem="imN-Tz-U8f" secondAttribute="centerY" id="dOx-aZ-IX0"/>
+                                        <constraint firstAttribute="trailing" secondItem="Z4U-rM-zXq" secondAttribute="trailing" constant="15" id="nfj-im-FoI"/>
                                     </constraints>
                                 </view>
                             </subviews>
@@ -115,7 +118,7 @@
                                 <constraint firstAttribute="bottom" secondItem="wWu-Lo-uCe" secondAttribute="bottom" id="wog-f3-NMY"/>
                             </constraints>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q02-dH-sYd" userLabel="please enter valid Number">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q02-dH-sYd" userLabel="please enter valid Number">
                             <rect key="frame" x="0.0" y="190" width="481" height="0.0"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>

@@ -9,7 +9,6 @@ import Foundation
 
 //MARK: Class APIServices
 public class APIServices: WsHelperProtocol{
-    
     //MARK: init
     public init(){}
     
@@ -34,8 +33,7 @@ public class APIServices: WsHelperProtocol{
     
     public func Authenticate(api: String, requestModel: TAAuthenticateRequest, completionHandler: @escaping (GeneralRespModel?) -> Void){
         WSHelper.sharedInstance.Authenticate(api: api, requestModel: requestModel, completion: { respObj in
-            switch respObj
-            {
+            switch respObj{
             case .success(let data):
                 if let Resp = data as? TAAuthGenericResponse {
                     let genObj = GeneralRespModel(status: true, respObj: Resp, message: "", etype: errorType.none)
@@ -49,5 +47,23 @@ public class APIServices: WsHelperProtocol{
                 completionHandler(.some(genObj))
             }
         })
+    }
+    
+    public func ResendPIN(api: String, requestModel: TAResendPINRequest, completionHandler: @escaping (GeneralRespModel?) -> Void) {
+        WSHelper.sharedInstance.ResendPIN(api: api, requestModel: requestModel) { respObj in
+            switch respObj{
+            case .success(let data):
+                if let Resp = data as? TAResendPINResponse{
+                    let genObj = GeneralRespModel(status: true, respObj: Resp, message: "", etype: errorType.none)
+                    completionHandler(.some(genObj))
+                }
+            case .failure(let etype, let msg):
+                let genObj = GeneralRespModel(status: false, respObj: nil, message: msg, etype: etype)
+                completionHandler(.some(genObj))
+            case .sessionTimeOut(_):
+                let genObj = GeneralRespModel(status: false, respObj: nil, message: "Session time out !!", etype: .sessionTimeOut)
+                completionHandler(.some(genObj))
+            }
+        }
     }
 }

@@ -55,3 +55,45 @@ public let msg_invalid_password = "please try to fil between 8 to 25 characters 
 //MARK: UIPicker (Country Dropdown)
 public let countryArray = ["+1","+44","+91"]
 
+
+
+
+
+// MARK: Theme method's for UI Element's
+//MARK: HeaderView Logo
+public func setThemsForHeaderViewImageORLogo(img: UIImageView, config: TAImage){
+    img.image = config.TAImageLogo
+}
+
+//MARK: View Configuration
+public func setThemsForView(view:UIView, config:TAUIView){
+    view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
+    view.layer.borderColor = config.TAViewBorderColor.cgColor
+    view.layer.borderWidth = CGFloat(config.TAViewborderWidth)
+}
+
+//MARK: Label Configuration
+public func setThemsForLabel(lbl:UILabel, config:TALable){
+    lbl.text = config.TAText
+    lbl.textColor = config.TATextColor
+    lbl.font = config.TATextFont
+    lbl.numberOfLines = config.TATextNumberOfLines
+    lbl.textAlignment = config.TATextAlignment
+}
+
+ //MARK: TextField Configuration
+ public func setThemsForTextField(textfiled: UITextField, config:TATextFiled){
+     textfiled.placeholder = config.TATextfiledPlaceHolderText
+     textfiled.textColor = config.TATextfiledPlaceHolderTextColor
+     textfiled.font = config.TATextfiledPlaceHolderTextFont
+ }
+ 
+ //MARK:  Button Configuration
+ public func setThemsForButton(btn:UIButton, config:TAButton){
+     btn.setTitle(config.TABtnTitleText, for: .normal)
+     btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
+     btn.titleLabel?.font = config.TABtnTitleTextFont
+     btn.backgroundColor = config.TABtnBackgrounColor
+     btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
+     btn.layer.masksToBounds = config.TABtnMasksToBounds
+ }

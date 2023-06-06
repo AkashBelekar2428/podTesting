@@ -163,6 +163,26 @@ public class WSHelper: NSObject {
             }
         }
     }
+    public func ResendPIN(api:String, requestModel:TAResendPINRequest, completion:@escaping(responseObject) -> ()){
+        let dic = requestModel.toJSON()
+        WebServiceCall(api: api, httpType: .post, dict: dic) { (obj) in
+            switch obj {
+            case .success(let respObj):
+                
+                let resp = respObj as! AFDataResponse<Data?>
+                let bodyString = String.init(data: resp.data!, encoding: String.Encoding.utf8)!
+                let genResp = Mapper<TAResendPINResponse>().map(JSONString: bodyString)
+                completion(.success(genResp!))
+                break
+            case .failure(let type,let msg):
+                completion(.failure(type, msg))
+                break
+            case .sessionTimeOut(let respObj):
+                completion(.sessionTimeOut(respObj))
+            }
+        }
+    }
+    
 }
 
 //MARK: GeneralRespModel Structure

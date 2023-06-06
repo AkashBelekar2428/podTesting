@@ -248,59 +248,6 @@ public class PINView: UIView {
         return nib
     }
     
-    //MARK: ImageView Configuration for Logo
-    public func setThemsForLogo(img:UIImageView, config:TAImage){
-        img.image = config.TAImageLogo
-    }
-    
-    
-    //MARK: Lable Configuration for login
-    public func setThemsForLable(lbl:UILabel, config:TALable){
-        lbl.text = config.TAText
-        lbl.textColor = config.TATextColor
-        lbl.font = config.TATextFont
-        lbl.numberOfLines = config.TATextNumberOfLines
-        lbl.textAlignment = config.TATextAlignment
-    }
-    
-    //MARK: Valide Button
-    public func setThemsForButton(btn:UIButton, config:TAButton){
-        btn.setTitle( config.TABtnTitleText, for: .normal)
-        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
-        btn.titleLabel?.font = config.TABtnTitleTextFont
-        btn.backgroundColor = config.TABtnBackgrounColor
-        btn.layer.cornerRadius = CGFloat(config.TABtnCornerRadius)
-        btn.layer.masksToBounds = config.TABtnMasksToBounds
-    }
-    
-    //MARK: ResendPIN Button
-    public func setThemsForResentPINButton(btn:UIButton, config: TAButton) {
-        btn.setTitle( config.TABtnTitleText, for: .normal)
-        btn.setTitleColor(config.TABtnTitleTextColor, for: .normal)
-        btn.titleLabel?.font = config.TABtnTitleTextFont
-        btn.backgroundColor = config.TABtnBackgrounColor
-    }
-    
-    //MARK: TextField
-    public func setThemsForTextField(textfiled: UITextField, config:TATextFiled) {
-        textfiled.placeholder  = config.TATextfiledPlaceHolderText
-        textfiled.textColor   = config.TATextfiledPlaceHolderTextColor
-        textfiled.font = config.TATextfiledPlaceHolderTextFont
-        textfiled.layer.borderColor = config.TATextfiledPlaceHolderTextColor.cgColor
-        textfiled.layer.borderWidth = CGFloat(config.TATextfiledPlaceHolderBorderWidth)
-    }
-    
-    //MARK: ContainerView
-    public func setThemsContainerView(view:UIView, config: TAUIView) {
-        view.layer.shadowColor = config.TAviewShadowColor.cgColor
-        view.layer.shadowOpacity = Float(config.TAviewShadowOpacity)
-        view.layer.shadowOffset = config.TAviewShadowOffset
-        view.layer.shadowRadius = CGFloat(config.TAViewCornerRadius)
-        view.layer.cornerRadius = CGFloat(config.TAViewCornerRadius)
-        self.viewContainerHeight.constant = CGFloat(config.TAviewHeight)
-    }
-    
-    
     //MARK: SetDefaultThems
     public func setPINDefaultThemes(){
         let pinViewConfig = themsConfiguration()
@@ -321,54 +268,54 @@ public class PINView: UIView {
         
         //MARK: ContainerView
         containerView.TAViewCornerRadius = 10
-        containerView.TAviewShadowColor = .gray
-        containerView.TAviewShadowOpacity = 0.4
-        containerView.TAviewShadowOffset = CGSize(width: 2.0, height: 2.0)
-        containerView.TAviewShadowRadius = 6
-        containerView.TAviewHeight = 350
+        containerView.TAViewShadowColor = .gray
+        containerView.TAViewShadowOpacity = 0.4
+        containerView.TAViewShadowOffset = CGSize(width: 2.0, height: 2.0)
+        containerView.TAViewShadowRadius = 6
+        containerView.TAViewHeight = 350
         
         //MARK: Config Logo
         imgLogo.TAImageLogo = UIImage(named: "") ?? #imageLiteral(resourceName: "logo2")
         
         //MARK: Config Login Label
         lblLogin.TAText = "Login"
-        lblLogin.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblLogin.TATextColor = TAColor.textLblColor
         lblLogin.TATextFont = .boldSystemFont(ofSize: 28)
         lblLogin.TATextAlignment = .left
         lblLogin.TATextNumberOfLines = 0
         
         //MARK: Description Txt
         lblPinDescription.TAText = "Please enter your 6 Digit PIN"
-        lblPinDescription.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblPinDescription.TATextColor = TAColor.textLblColor
         lblPinDescription.TATextAlignment = .left
         lblPinDescription.TATextFont = .systemFont(ofSize: 14, weight: .regular)
         
         //MARK: PIN Txt
         lblPIN.TAText = "PIN"
-        lblPIN.TATextColor = #colorLiteral(red: 0.07677120715, green: 0.07693774253, blue: 0.0824514851, alpha: 1)
+        lblPIN.TATextColor = TAColor.textLblColor
         lblPIN.TATextAlignment = .left
         lblPIN.TATextFont = .systemFont(ofSize: 14, weight: .medium)
         
         //MARK: Configu Enter Valid PIN
         lblEnterValidPIN.TAText = "Please enter valid PIN"
-        lblEnterValidPIN.TATextColor = #colorLiteral(red: 0.862745098, green: 0.2070690691, blue: 0.2673147619, alpha: 1)
+        lblEnterValidPIN.TATextColor = TAColor.validAuthColor
         lblEnterValidPIN.TATextAlignment = .left
         lblEnterValidPIN.TATextFont = .systemFont(ofSize: 13, weight: .regular)
         
         //MARK: Valide Btn
         btnValid.TABtnTitleText = "Validate"
-        btnValid.TABtnTitleTextColor = .white
-        btnValid.TABtnBackgrounColor = #colorLiteral(red: 0.2726369798, green: 0.2734699845, blue: 0.3002841473, alpha: 1)
+        btnValid.TABtnTitleTextColor = TAColor.buttonTextColor
+        btnValid.TABtnBackgrounColor = TAColor.buttonBackgroundColor
         btnValid.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
         btnValid.TABtnCornerRadius = 5
         btnValid.TABtnMasksToBounds =  true
         
         //MARK: Resend Btn
         btnResend.TABtnTitleText = "Did not receive PIN? Resend"
-        btnResend.TABtnTitleTextColor = #colorLiteral(red: 0.1054552868, green: 0.09205854684, blue: 0.6702544689, alpha: 1)
-        btnResend.TABtnBackgrounColor = .white
+        btnResend.TABtnTitleTextColor = TAColor.forgotButtonTitleColor
+        btnResend.TABtnBackgrounColor = TAColor.buttonTextColor
         btnResend.TABtnTitleTextFont = .systemFont(ofSize: 14, weight: .medium)
-        btnResend.TABtnBackgrounColor = .btnTitleColor
+       
         
         
         //MARK: Assign Values
@@ -387,19 +334,19 @@ public class PINView: UIView {
     //MARK: Set Configurations
     public func setThemeWithPINConfiguration(config:AuthenticationConfiguration) {
       
-        self.setThemsForLable(lbl: lblLogin, config: config.loginLbl)
+        setThemsForLabel(lbl: lblLogin, config: config.loginLbl)
         
-        self.setThemsForLogo(img: imgLogo, config: config.logoImage)
+        setThemsForHeaderViewImageORLogo(img: imgLogo, config: config.logoImage)
+                
+        setThemsForLabel(lbl: lblPinDescription, config: config.pinDescription)
         
-        self.setThemsForLable(lbl: lblPinDescription, config: config.pinDescription)
+        setThemsForLabel(lbl: lblPin, config: config.PinLbl)
         
-        self.setThemsForLable(lbl: lblPin, config: config.PinLbl)
+        setThemsForLabel(lbl: lblEnterValidPIN, config: config.enterValidPin)
         
-        self.setThemsForLable(lbl: lblEnterValidPIN, config: config.enterValidPin)
+        setThemsForButton(btn: btnValidate, config: config.validBtn)
         
-        self.setThemsForButton(btn: btnValidate, config: config.validBtn)
-        
-        self.setThemsForButton(btn: btnResendPin, config: config.resendBtn)
+        setThemsForButton(btn: btnResendPin, config: config.resendBtn)
         
        // self.setThemsContainerView(view: viewContainerPIN, config: config.containerViewShow)
         
@@ -414,8 +361,9 @@ public class PINView: UIView {
         if trimPIN.1 == true{
             delegate?.validateBtnAction(pinNumber: pinVarTf.text!)
         }else{
-            let topController = TopControllerManager.getTopViewController()
-            AlertManager.shared.showAlert(title: App_Alert_Title, msg: trimPIN.0, action: ok, viewController: topController!)
+          //  let topController = TopControllerManager.getTopViewController()
+          //  AlertManager.shared.showAlert(title: App_Alert_Title, msg: trimPIN.0, action: ok, viewController: topController!)
+            lblEnterValidPIN.isHidden = false
         }
     }
     
@@ -520,6 +468,24 @@ extension PINView: UITextViewDelegate, UITextFieldDelegate {
         } else{
             return true
         }
+    }
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    public func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == pinVarTf{
+            txtFirst.text = ""
+            txtSecond.text = ""
+            txtthird.text = ""
+            txtFourth.text = ""
+            txtFifth.text = ""
+            txtSixth.text = ""
+            pinVarTf.text = ""
+        }
+        lblEnterValidPIN.isHidden = true
+        
+        return true
     }
 }
 
